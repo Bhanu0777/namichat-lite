@@ -35,13 +35,12 @@ class AuthRepositoryImpl implements AuthRepository {
     String? fullName,
   }) async {
     try {
-      final user = await _remote.register(
+      final (user, tokens) = await _remote.register(
         email: email,
         username: username,
         password: password,
         fullName: fullName,
       );
-      final tokens = await _remote.login(username, password);
       await _local.cacheTokens(tokens);
       await _local.cacheUser(user);
       return Right(user.toEntity());

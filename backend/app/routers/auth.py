@@ -13,6 +13,7 @@ from app.schemas.auth import (
     AccessToken,
     LoginRequest,
     RefreshRequest,
+    RegisterResponse,
     Token,
     UserCreate,
     UserRead,
@@ -29,10 +30,11 @@ def _auth_service(db: Session) -> AuthService:
     return AuthService(UserRepository(db))
 
 
-@router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
-def register(payload: UserCreate, db: DbDep) -> UserRead:
+@router.post("/register", response_model=RegisterResponse, status_code=status.HTTP_201_CREATED)
+def register(payload: UserCreate, db: DbDep) -> RegisterResponse:
     user = _auth_service(db).register(payload)
-    return UserRead.model_validate(user)
+    tokens = _auth_service(db).issue_tokens(user)
+    return RegisterResponse(user=UserRead.model_validate(user), **tokens.model_dump())
 
 
 @router.post("/login", response_model=Token)

@@ -5,6 +5,7 @@ import 'package:namichat_lite/features/auth/data/models/auth_token_model.dart';
 import 'package:namichat_lite/features/auth/data/models/login_request_dto.dart';
 import 'package:namichat_lite/features/auth/data/models/refresh_request_dto.dart';
 import 'package:namichat_lite/features/auth/data/models/register_request_dto.dart';
+import 'package:namichat_lite/features/auth/data/models/register_response_dto.dart';
 import 'package:namichat_lite/features/auth/data/models/user_model.dart';
 
 /// Remote data source for authentication backed by the FastAPI backend.
@@ -21,7 +22,7 @@ class AuthRemoteDataSource {
     return AuthTokenModel.fromJson(response.data as Map<String, dynamic>);
   }
 
-  Future<UserModel> register({
+  Future<(UserModel, AuthTokenModel)> register({
     required String email,
     required String username,
     required String password,
@@ -36,7 +37,8 @@ class AuthRemoteDataSource {
         fullName: fullName,
       ).toJson(),
     );
-    return UserModel.fromJson(response.data as Map<String, dynamic>);
+    final dto = RegisterResponseDto.fromJson(response.data as Map<String, dynamic>);
+    return (dto.user, AuthTokenModel(accessToken: dto.accessToken, refreshToken: dto.refreshToken, tokenType: dto.tokenType));
   }
 
   Future<UserModel> getProfile() async {
