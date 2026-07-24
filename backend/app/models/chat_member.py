@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 import uuid
 from datetime import datetime, timezone
-from typing import Optional
 
 from sqlalchemy import DateTime, ForeignKey, String, Uuid, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -30,5 +31,5 @@ class ChatMember(Base):
     joined_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, nullable=False)
 
     # Relationships
-    chat: Mapped["Chat"] = relationship(back_populates="members")
-    user: Mapped["User"] = relationship(back_populates="memberships")
+    chat: Mapped[Chat] = relationship(back_populates="members")
+    user: Mapped[User] = relationship(back_populates="memberships")

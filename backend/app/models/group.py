@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import secrets
 import uuid
 from datetime import datetime
-from typing import List, Optional
+from typing import List
 
 from sqlalchemy import DateTime, ForeignKey, String, Text, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -22,11 +24,11 @@ class Group(Base):
         Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
     name: Mapped[str] = mapped_column(String(128), nullable=False)
-    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
     owner_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"), index=True, nullable=False
     )
-    avatar_url: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
+    avatar_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
     invite_code: Mapped[str] = mapped_column(
         String(16),
         unique=True,
@@ -41,5 +43,5 @@ class Group(Base):
     )
 
     # Relationships
-    owner: Mapped["User"] = relationship(back_populates="owned_groups")
-    chats: Mapped[List["Chat"]] = relationship(back_populates="group")
+    owner: Mapped[User] = relationship(back_populates="owned_groups")
+    chats: Mapped[List[Chat]] = relationship(back_populates="group")

@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 import uuid
 from datetime import datetime, timezone
-from typing import Optional
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, Text, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -18,7 +19,7 @@ class Message(Base):
     chat_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("chats.id", ondelete="CASCADE"), index=True, nullable=False
     )
-    sender_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+    sender_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("users.id", ondelete="SET NULL"), index=True, nullable=True
     )
     content: Mapped[str] = mapped_column(Text, nullable=False)
@@ -28,5 +29,5 @@ class Message(Base):
     )
 
     # Relationships
-    chat: Mapped["Chat"] = relationship(back_populates="messages")
-    sender: Mapped[Optional["User"]] = relationship(back_populates="messages")
+    chat: Mapped[Chat] = relationship(back_populates="messages")
+    sender: Mapped[User | None] = relationship(back_populates="messages")

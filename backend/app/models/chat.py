@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import uuid
 from datetime import datetime, timezone
-from typing import List, Optional
+from typing import List
 
 from sqlalchemy import DateTime, ForeignKey, String, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -15,7 +17,7 @@ class Chat(Base):
     id: Mapped[uuid.UUID] = mapped_column(
         Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
-    group_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+    group_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("groups.id", ondelete="CASCADE"), index=True, nullable=True
     )
     title: Mapped[str] = mapped_column(String(128), default="New Chat", nullable=False)
@@ -28,10 +30,10 @@ class Chat(Base):
     )
 
     # Relationships
-    group: Mapped[Optional["Group"]] = relationship(back_populates="chats")
-    members: Mapped[List["ChatMember"]] = relationship(
+    group: Mapped[Group | None] = relationship(back_populates="chats")
+    members: Mapped[List[ChatMember]] = relationship(
         back_populates="chat", cascade="all, delete-orphan"
     )
-    messages: Mapped[List["Message"]] = relationship(
+    messages: Mapped[List[Message]] = relationship(
         back_populates="chat", cascade="all, delete-orphan"
     )

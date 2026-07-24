@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
-
 /// Compile-time environment configuration.
 ///
 /// Values are injected via `--dart-define` at build time, e.g.:
@@ -15,11 +13,6 @@ class Env {
   static const String _baseUrlOverride =
       String.fromEnvironment('BASE_URL', defaultValue: '');
 
-  /// Resolved base URL.
-  ///
-  /// - If `--dart-define=BASE_URL=...` was supplied, that value is used.
-  /// - On Android (emulator) the host machine is reachable via `10.0.2.2`.
-  /// - On web, iOS simulator, macOS, Windows and Linux use `localhost`.
   static String get baseUrl {
     if (_baseUrlOverride.isNotEmpty) return _baseUrlOverride;
     return 'https://namichat-lite.onrender.com';
