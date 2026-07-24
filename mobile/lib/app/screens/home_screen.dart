@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
+import 'package:namichat_lite/core/di/injection_container.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/app/router/route_paths.dart';
 
@@ -14,6 +16,7 @@ class HomeChatPreview {
     required this.avatarLabel,
     required this.accentColor,
     this.online = false,
+    required this.chatId,
   });
 
   final String title;
@@ -23,37 +26,38 @@ class HomeChatPreview {
   final String avatarLabel;
   final Color accentColor;
   final bool online;
+  final String chatId;
 }
 
-final homeChatsProvider = Provider<List<HomeChatPreview>>((ref) {
-  return const [
-    HomeChatPreview(
-      title: 'Mina',
-      preview: 'See you at the cafe in 20 minutes.',
-      timestamp: 'Now',
-      unreadCount: 2,
-      avatarLabel: 'M',
-      accentColor: Color(0xFF6C63FF),
-      online: true,
-    ),
-    HomeChatPreview(
-      title: 'Design Crew',
-      preview: 'The new onboarding flow is ready for review.',
-      timestamp: '10:24',
-      unreadCount: 0,
-      avatarLabel: 'D',
-      accentColor: Color(0xFF1E88E5),
-    ),
-    HomeChatPreview(
-      title: 'Nami Support',
-      preview: 'We synced your latest profile updates.',
-      timestamp: 'Yesterday',
-      unreadCount: 1,
-      avatarLabel: 'N',
-      accentColor: Color(0xFF43A047),
-    ),
-  ];
+final homeChatsProvider = FutureProvider<List<HomeChatPreview>>((ref) async {
+  final result = await ref.read(listChatsUseCaseProvider)();
+  return result.fold(
+    (failure) => throw failure,
+    (chats) => chats
+        .map(
+          (c) => HomeChatPreview(
+            title: c.title,
+            preview: c.lastMessage?.content ?? 'No messages yet',
+            timestamp: _formatTime(c.lastMessage?.createdAt ?? c.updatedAt),
+            unreadCount: c.unreadCount,
+            avatarLabel: c.title.isEmpty ? '?' : c.title[0].toUpperCase(),
+            accentColor: const Color(0xFF6C63FF),
+            online: false,
+            chatId: c.id,
+          ),
+        )
+        .toList(),
+  );
 });
+
+String _formatTime(DateTime dt) {
+  final now = DateTime.now();
+  final diff = now.difference(dt);
+  if (diff.inDays == 0 && diff.inHours == 0 && diff.inMinutes < 1) return 'Now';
+  if (diff.inDays == 0) return DateFormat('HH:mm').format(dt);
+  if (diff.inDays == 1) return 'Yesterday';
+  return DateFormat('MMM d').format(dt);
+}
 
 final homeNavigationProvider = StateProvider<int>((ref) => 0);
 
@@ -62,7 +66,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final chats = ref.watch(homeChatsProvider);
+    final chatsAsync = ref.watch(homeChatsProvider);
     final selectedIndex = ref.watch(homeNavigationProvider);
     final scheme = Theme.of(context).colorScheme;
 
@@ -71,7 +75,7 @@ class HomeScreen extends ConsumerWidget {
         title: const Text('NamiChat Lite'),
         actions: [
           IconButton(
-            onPressed: () => context.push(RoutePaths.settings),
+            onPressed: () => context.go(RoutePaths.settings),
             icon: const Icon(Icons.settings_outlined),
             tooltip: 'Settings',
           ),
@@ -164,7 +168,7 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '${chats.where((chat) => chat.unreadCount > 0).length} unread',
+                  '${chatsAsync.valueOrNull?.where((chat) => chat.unreadCount > 0).length ?? 0} unread',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: scheme.primary,
                       ),
@@ -172,7 +176,17 @@ class HomeScreen extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: FlowSpacing.md),
-            if (chats.isEmpty)
+            if (chatsAsync.isLoading)
+              const Center(child: Padding(
+                padding: EdgeInsets.symmetric(vertical: FlowSpacing.xl),
+                child: CircularProgressIndicator(),
+              ))
+            else if (chatsAsync.hasError)
+              FlowErrorState(
+                message: chatsAsync.error.toString(),
+                onRetry: () => ref.invalidate(homeChatsProvider),
+              )
+            else if (chatsAsync.valueOrNull == null || chatsAsync.valueOrNull!.isEmpty)
               FlowEmptyState(
                 icon: Icons.forum_outlined,
                 title: 'No conversations yet',
@@ -184,20 +198,20 @@ class HomeScreen extends ConsumerWidget {
               ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: chats.length,
+                itemCount: chatsAsync.valueOrNull!.length,
                 separatorBuilder: (_, __) => const SizedBox(height: FlowSpacing.md),
                 itemBuilder: (context, index) {
-                  final chat = chats[index];
+                  final chat = chatsAsync.valueOrNull![index];
                   final hasUnread = chat.unreadCount > 0;
                   return FlowCard(
-                    onTap: () {},
+                    onTap: () => context.push(RoutePaths.chatWithId(chat.chatId)),
                     child: Row(
                       children: [
                         Stack(
                           children: [
                             CircleAvatar(
                               radius: 24,
-                              backgroundColor: chat.accentColor.withOpacity(0.16),
+                              backgroundColor: chat.accentColor.withValues(alpha: 0.16),
                               child: Text(
                                 chat.avatarLabel,
                                 style: TextStyle(

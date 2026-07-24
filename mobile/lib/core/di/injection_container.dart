@@ -21,6 +21,7 @@ import 'package:namichat_lite/features/chat/data/datasources/chat_remote_datasou
 import 'package:namichat_lite/features/chat/data/repositories/chat_repository_impl.dart';
 import 'package:namichat_lite/features/chat/domain/repositories/chat_repository.dart';
 import 'package:namichat_lite/features/chat/domain/usecases/fetch_messages_usecase.dart';
+import 'package:namichat_lite/features/chat/domain/usecases/list_chats_usecase.dart';
 import 'package:namichat_lite/features/chat/domain/usecases/open_chat_usecase.dart';
 import 'package:namichat_lite/features/chat/domain/usecases/search_users_usecase.dart';
 import 'package:namichat_lite/features/groups/data/datasources/group_remote_datasource.dart';
@@ -122,6 +123,10 @@ final chatRepositoryProvider = Provider<ChatRepository>(
 
 final searchUsersUseCaseProvider = Provider<SearchUsersUseCase>(
   (ref) => SearchUsersUseCase(ref.watch(chatRepositoryProvider)),
+);
+
+final listChatsUseCaseProvider = Provider<ListChatsUseCase>(
+  (ref) => ListChatsUseCase(ref.watch(chatRepositoryProvider)),
 );
 
 final openChatUseCaseProvider = Provider<OpenChatUseCase>(

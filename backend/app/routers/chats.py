@@ -16,7 +16,7 @@ from app.core.security import get_current_user
 from app.models.user import User
 from app.repositories.chat_repository import ChatRepository
 from app.repositories.user_repository import UserRepository
-from app.schemas.message import ChatRead, MessageList, MessageRead
+from app.schemas.message import ChatRead, ChatWithLastMessage, MessageList, MessageRead
 from app.services.chat_service import ChatService
 from app.services.message_service import MessageService
 
@@ -56,7 +56,7 @@ def open_or_create_chat(
 
 @router.get(
     "",
-    response_model=list[ChatRead],
+    response_model=list[ChatWithLastMessage],
     summary="List all chats for the current user",
 )
 def list_chats(
@@ -64,9 +64,8 @@ def list_chats(
     db: DbDep,
     skip: int = 0,
     limit: int = 50,
-) -> list[ChatRead]:
-    chats = ChatRepository(db).list_for_user(current_user.id, skip=skip, limit=limit)
-    return [ChatRead.model_validate(c) for c in chats]
+) -> list[ChatWithLastMessage]:
+    return ChatService(db).list_chats(current_user.id, skip=skip, limit=limit)
 
 
 @router.get(

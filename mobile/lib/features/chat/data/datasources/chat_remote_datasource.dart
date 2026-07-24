@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import 'package:namichat_lite/core/network/api_endpoints.dart';
 import 'package:namichat_lite/core/network/dio_client.dart';
+import 'package:namichat_lite/features/chat/data/models/chat_with_last_message_model.dart';
 import 'package:namichat_lite/features/chat/data/models/message_model.dart';
 import 'package:namichat_lite/features/chat/data/models/user_search_result_model.dart';
 
@@ -9,6 +10,14 @@ class ChatRemoteDataSource {
   ChatRemoteDataSource(this._dioClient);
 
   final DioClient _dioClient;
+
+  Future<List<ChatWithLastMessageModel>> listChats() async {
+    final response = await _dioClient.client.get(ApiEndpoints.chats);
+    final data = response.data as List;
+    return data
+        .map((i) => ChatWithLastMessageModel.fromJson(i as Map<String, dynamic>))
+        .toList();
+  }
 
   // ---- User search ----
 

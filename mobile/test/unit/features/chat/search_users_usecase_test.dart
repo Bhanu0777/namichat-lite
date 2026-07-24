@@ -1,14 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:namichat_lite/core/errors/failures.dart';
 import 'package:namichat_lite/core/utils/either.dart';
+import 'package:namichat_lite/features/chat/data/models/chat_with_last_message_model.dart';
 import 'package:namichat_lite/features/chat/domain/entities/message.dart';
 import 'package:namichat_lite/features/chat/domain/entities/user_search_result.dart';
 import 'package:namichat_lite/features/chat/domain/repositories/chat_repository.dart';
 import 'package:namichat_lite/features/chat/domain/usecases/search_users_usecase.dart';
-
-// ---------------------------------------------------------------------------
-// Fake repository
-// ---------------------------------------------------------------------------
 
 class _FakeChatRepository implements ChatRepository {
   List<UserSearchResult>? _results;
@@ -23,6 +20,10 @@ class _FakeChatRepository implements ChatRepository {
     _failure = f;
     _results = null;
   }
+
+  @override
+  Future<Either<Failure, List<ChatWithLastMessageModel>>> listChats() async =>
+      const Right([]);
 
   @override
   Future<Either<Failure, List<UserSearchResult>>> searchUsers(String query) async {
@@ -43,10 +44,6 @@ class _FakeChatRepository implements ChatRepository {
       const Right([]);
 }
 
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
-
 void main() {
   late _FakeChatRepository repo;
   late SearchUsersUseCase useCase;
@@ -63,7 +60,7 @@ void main() {
 
   group('SearchUsersUseCase', () {
     test('empty query returns Right([]) without calling repo', () async {
-      repo.returnFailure(const NetworkFailure()); // would fail if called
+      repo.returnFailure(const NetworkFailure());
       final result = await useCase('');
       expect(result.isRight, isTrue);
       expect(result.right, isEmpty);

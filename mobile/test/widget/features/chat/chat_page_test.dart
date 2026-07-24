@@ -8,16 +8,13 @@ import 'package:namichat_lite/features/chat/presentation/pages/chat_page.dart';
 import 'package:namichat_lite/features/chat/presentation/providers/chat_provider.dart';
 
 import 'package:namichat_lite/core/network/socket_service.dart';
+import 'package:namichat_lite/features/chat/data/models/chat_with_last_message_model.dart';
 import 'package:namichat_lite/features/chat/domain/usecases/fetch_messages_usecase.dart';
 import 'package:namichat_lite/features/chat/domain/repositories/chat_repository.dart';
 import 'package:namichat_lite/features/chat/domain/entities/message.dart';
 import 'package:namichat_lite/features/chat/domain/entities/user_search_result.dart';
 import 'package:namichat_lite/core/errors/failures.dart';
 import 'package:namichat_lite/core/utils/either.dart';
-
-// ---------------------------------------------------------------------------
-// Minimal fakes
-// ---------------------------------------------------------------------------
 
 class _FakeSocketService implements SocketService {
   _FakeSocketService() {
@@ -54,6 +51,10 @@ class _FakeSocketService implements SocketService {
 
 class _FakeChatRepository implements ChatRepository {
   @override
+  Future<Either<Failure, List<ChatWithLastMessageModel>>> listChats() async =>
+      const Right([]);
+
+  @override
   Future<Either<Failure, List<Message>>> fetchMessages(
     String chatId, {
     int skip = 0,
@@ -83,10 +84,6 @@ class _FakeChatNotifier extends ChatNotifier {
           fetchMessages: _FakeFetchMessagesUseCase(),
         );
 }
-
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
 
 void main() {
   group('ChatPage', () {

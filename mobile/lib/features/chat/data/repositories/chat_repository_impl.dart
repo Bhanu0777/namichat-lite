@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:namichat_lite/core/errors/failures.dart';
 import 'package:namichat_lite/core/utils/either.dart';
 import 'package:namichat_lite/features/chat/data/datasources/chat_remote_datasource.dart';
+import 'package:namichat_lite/features/chat/data/models/chat_with_last_message_model.dart';
 import 'package:namichat_lite/features/chat/domain/entities/message.dart';
 import 'package:namichat_lite/features/chat/domain/entities/user_search_result.dart';
 import 'package:namichat_lite/features/chat/domain/repositories/chat_repository.dart';
@@ -10,6 +11,17 @@ class ChatRepositoryImpl implements ChatRepository {
   ChatRepositoryImpl(this._remote);
 
   final ChatRemoteDataSource _remote;
+
+  @override
+  Future<Either<Failure, List<ChatWithLastMessageModel>>> listChats() async {
+    try {
+      return Right(await _remote.listChats());
+    } on DioException catch (e) {
+      return Left(_map(e, fallback: 'Could not load chats'));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 
   @override
   Future<Either<Failure, List<UserSearchResult>>> searchUsers(
