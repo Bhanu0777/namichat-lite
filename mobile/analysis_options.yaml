@@ -1,0 +1,9 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    always_use_package_imports: true
+    avoid_print: true
+    sort_pub_dependencies: true
+    unawaited_futures: true

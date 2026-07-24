@@ -1,0 +1,30 @@
+# ---------------------------------------------------------------------------
+# NamiChat Lite — Backend dependencies
+# Install with:  pip install -r requirements.txt
+# ---------------------------------------------------------------------------
+
+# --- Web framework + ASGI server ---
+fastapi==0.115.6                 # API framework (routing, validation, OpenAPI)
+uvicorn[standard]==0.34.0        # ASGI server; [standard] adds websockets + uvloop
+
+# --- Database (PostgreSQL + ORM) ---
+sqlalchemy==2.0.36               # ORM / query builder (2.x API)
+psycopg[binary]==3.2.3           # PostgreSQL driver (psycopg 3) for SQLAlchemy
+alembic==1.14.0                  # database migrations
+
+# --- Configuration & data validation ---
+pydantic==2.10.4                 # request/response models
+pydantic-settings==2.7.1         # typed settings from environment / .env
+email-validator==2.2.0           # EmailStr support for pydantic
+python-multipart==0.0.20         # form-encoded bodies (OAuth2 password login)
+
+# --- Authentication (JWT + password hashing) ---
+python-jose[cryptography]==3.3.0 # JWT encode/decode
+passlib==1.7.4                   # password hashing interface
+bcrypt==4.0.1                    # bcrypt backend for passlib
+
+# --- Realtime (WebSockets) ---
+websockets==13.1                 # WS protocol implementation used by Starlette
+
+# NOTE: CORS is provided by FastAPI's built-in CORSMiddleware (no extra
+# package). It is configured in app/main.py via settings.CORS_ORIGINS.
