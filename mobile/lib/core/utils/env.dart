@@ -22,12 +22,7 @@ class Env {
   /// - On web, iOS simulator, macOS, Windows and Linux use `localhost`.
   static String get baseUrl {
     if (_baseUrlOverride.isNotEmpty) return _baseUrlOverride;
-    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
-      return 'http://10.0.2.2:8000';
-    }
-    // Use 127.0.0.1 instead of localhost to avoid IPv6 resolution issues
-    // on Windows desktop Flutter apps.
-    return 'http://127.0.0.1:8000';
+    return 'https://namichat-lite.onrender.com';
   }
 
   static const String apiVersion =
