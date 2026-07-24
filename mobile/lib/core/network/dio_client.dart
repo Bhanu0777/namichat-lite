@@ -6,6 +6,7 @@ import 'package:namichat_lite/core/utils/env.dart';
 import 'package:namichat_lite/core/storage/secure_storage.dart';
 import 'package:namichat_lite/core/storage/storage_keys.dart';
 import 'package:namichat_lite/core/network/network_interceptor.dart';
+import 'package:flutter/foundation.dart';
 
 /// Centralized Dio client factory with auth + error + logging interceptors.
 class DioClient {
@@ -30,6 +31,9 @@ class DioClient {
             compact: true,
           ),
       ]);
+
+    // TEMPORARY debug print: confirm the real base URL baked into the app.
+    debugPrint('API Base URL = ${_dio.options.baseUrl}');
   }
 
   final SecureStorage _secureStorage;
