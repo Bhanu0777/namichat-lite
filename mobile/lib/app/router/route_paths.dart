@@ -9,15 +9,15 @@ class RoutePaths {
   static const String login = '/login';
   static const String register = '/register';
   static const String home = '/home';
-  static const String profile = '/profile';
+  static const String chats = '/home/chats';
+  static const String userSearch = '/home/search';
+  static const String groups = '/home/groups';
+  static const String profile = '/home/profile';
   static const String editProfile = '/profile/edit';
-  static const String conversations = '/conversations';
-  static const String chat        = '/chat';
-  static const String userSearch  = '/search';
-  static const String groups      = '/groups';
+  static const String chat = '/chat';
   static const String createGroup = '/groups/create';
-  static const String joinGroup   = '/groups/join';
-  static const String settings    = '/settings';
+  static const String joinGroup = '/groups/join';
+  static const String settings = '/settings';
 
   static String chatWithId(String id)  => '$chat/$id';
   static String groupDetail(String id) => '$groups/$id';

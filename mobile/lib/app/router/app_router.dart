@@ -5,15 +5,16 @@ import 'package:go_router/go_router.dart';
 import 'package:namichat_lite/app/router/feature_routes.dart';
 import 'package:namichat_lite/app/router/route_paths.dart';
 import 'package:namichat_lite/app/router/splash_page.dart';
-import 'package:namichat_lite/app/screens/home_screen.dart';
+import 'package:namichat_lite/app/shell/main_shell.dart';
+import 'package:namichat_lite/features/chat/presentation/pages/chats_page.dart';
+import 'package:namichat_lite/features/chat/presentation/pages/user_search_page.dart';
+import 'package:namichat_lite/features/groups/presentation/pages/groups_list_page.dart';
+import 'package:namichat_lite/features/profile/presentation/pages/profile_page.dart';
 import 'package:namichat_lite/features/auth/presentation/providers/auth_provider.dart';
 import 'package:namichat_lite/features/auth/presentation/providers/auth_state.dart';
 
-/// A [ChangeNotifier] bridge that makes Riverpod auth state listenable by
-/// GoRouter's [GoRouter.refreshListenable].
 class _RouterNotifier extends ChangeNotifier {
   _RouterNotifier(this._ref) {
-    // Listen to the auth state and notify GoRouter whenever it changes.
     _ref.listen<AuthState>(
       authNotifierProvider,
       (_, __) => notifyListeners(),
@@ -27,21 +28,23 @@ class _RouterNotifier extends ChangeNotifier {
   String? redirect(BuildContext context, GoRouterState state) {
     final auth = _authState;
     final location = state.matchedLocation;
-    final onAuthRoute =
-        location == RoutePaths.login || location == RoutePaths.register;
 
     if (auth.status == AuthStatus.initial) return RoutePaths.splash;
+
+    final isAuthRoute = location == RoutePaths.login || location == RoutePaths.register;
+
     if (!auth.isAuthenticated) {
-      return onAuthRoute ? null : RoutePaths.login;
+      return isAuthRoute ? null : RoutePaths.login;
     }
-    if (onAuthRoute || location == RoutePaths.splash) {
-      return RoutePaths.home;
+
+    if (isAuthRoute || location == RoutePaths.splash) {
+      return RoutePaths.chats;
     }
+
     return null;
   }
 }
 
-/// Composition root for application routing.
 final routerProvider = Provider<GoRouter>((ref) {
   final notifier = _RouterNotifier(ref);
 
@@ -55,9 +58,30 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: RoutePaths.splash,
         builder: (context, state) => const SplashPage(),
       ),
-      GoRoute(
-        path: RoutePaths.home,
-        builder: (context, state) => const HomeScreen(),
+      ShellRoute(
+        builder: (context, state, child) => MainShell(child: child),
+        routes: [
+          GoRoute(
+            path: RoutePaths.home,
+            redirect: (_, __) => RoutePaths.chats,
+          ),
+          GoRoute(
+            path: RoutePaths.chats,
+            builder: (context, state) => const ChatsPage(),
+          ),
+          GoRoute(
+            path: RoutePaths.userSearch,
+            builder: (context, state) => const UserSearchPage(),
+          ),
+          GoRoute(
+            path: RoutePaths.groups,
+            builder: (context, state) => const GroupsListPage(),
+          ),
+          GoRoute(
+            path: RoutePaths.profile,
+            builder: (context, state) => const ProfilePage(),
+          ),
+        ],
       ),
       ...registerFeatureRoutes(),
     ],
