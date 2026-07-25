@@ -36,5 +36,14 @@ class Settings(BaseSettings):
             return [origin.strip() for origin in stripped.split(",") if origin.strip()]
         return v
 
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def normalize_database_url(cls, v: str) -> str:
+        if v.startswith("postgresql://") or v.startswith("postgresql+psycopg2://"):
+            return v.replace("postgresql://", "postgresql+psycopg://", 1).replace(
+                "postgresql+psycopg2://", "postgresql+psycopg://", 1
+            )
+        return v
+
 
 settings = Settings()
