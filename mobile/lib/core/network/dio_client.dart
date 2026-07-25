@@ -32,8 +32,28 @@ class DioClient {
           ),
       ]);
 
-    // TEMPORARY debug print: confirm the real base URL baked into the app.
     debugPrint('API Base URL = ${_dio.options.baseUrl}');
+    debugPrint('WS Base URL   = ${AppConstants.wsBaseUrl}');
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          debugPrint('➡ ${options.method} ${options.uri}');
+          handler.next(options);
+        },
+        onResponse: (response, handler) {
+          debugPrint('✅ ${response.statusCode} ${response.requestOptions.uri}');
+          handler.next(response);
+        },
+        onError: (e, handler) {
+          debugPrint('❌ ${e.type} :: ${e.requestOptions.uri}');
+          debugPrint('❌ ${e.message}');
+          if (e.response != null) {
+            debugPrint('❌ response=${e.response?.data}');
+          }
+          handler.next(e);
+        },
+      ),
+    );
   }
 
   final SecureStorage _secureStorage;

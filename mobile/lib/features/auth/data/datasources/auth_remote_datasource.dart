@@ -1,4 +1,6 @@
 
+import 'package:flutter/foundation.dart';
+
 import 'package:namichat_lite/core/network/api_endpoints.dart';
 import 'package:namichat_lite/core/network/dio_client.dart';
 import 'package:namichat_lite/features/auth/data/models/auth_token_model.dart';
@@ -15,10 +17,12 @@ class AuthRemoteDataSource {
   final DioClient _dioClient;
 
   Future<AuthTokenModel> login(String identifier, String password) async {
+    debugPrint('LOGIN START identifier=$identifier');
     final response = await _dioClient.client.post(
       ApiEndpoints.login,
       data: LoginRequestDto(identifier: identifier, password: password).toJson(),
     );
+    debugPrint('LOGIN SUCCESS status=${response.statusCode}');
     return AuthTokenModel.fromJson(response.data as Map<String, dynamic>);
   }
 
