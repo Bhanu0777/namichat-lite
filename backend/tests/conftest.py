@@ -4,10 +4,15 @@ Uses an in-memory SQLite database so tests run without PostgreSQL.
 Each test function gets its own clean database via the `db` fixture.
 """
 
+from pathlib import Path
+import sys
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker, Session
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.core.database import Base, get_db
 from app.core.security import create_access_token, hash_password
