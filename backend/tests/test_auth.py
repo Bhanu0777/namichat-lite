@@ -19,9 +19,9 @@ class TestRegister:
         })
         assert res.status_code == 201
         body = res.json()
-        assert body["email"] == "alice@example.com"
-        assert body["username"] == "alice"
-        assert "id" in body
+        assert body["user"]["email"] == "alice@example.com"
+        assert body["user"]["username"] == "alice"
+        assert "id" in body["user"]
         assert "hashed_password" not in body
 
     def test_register_auto_generates_nami_id(self, client: TestClient):

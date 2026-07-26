@@ -9,6 +9,11 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
     services:
       postgres:
         image: postgres:16-alpine
@@ -23,6 +28,13 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
+    env:
+      PYTHONPATH: .
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/namichat
+      JWT_SECRET_KEY: test-secret-key-for-ci-only-min-32-chars-long
+      JWT_ALGORITHM: HS256
+      REDIS_URL: redis://localhost:6379/0
+
     steps:
       - uses: actions/checkout@v4
 
@@ -33,7 +45,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd backend
           python -m venv .venv
           source .venv/bin/activate
           pip install -r requirements.txt
@@ -41,16 +52,10 @@ jobs:
 
       - name: Run migrations
         run: |
-          cd backend
           source .venv/bin/activate
           alembic upgrade head
 
       - name: Run tests
         run: |
-          cd backend
           source .venv/bin/activate
-          pytest tests/ -v
-        env:
-          DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/namichat
-          JWT_SECRET_KEY: test-secret-key-for-ci-only-min-32-chars-long
-          REDIS_URL: redis://localhost:6379/0
+          pytest -v
