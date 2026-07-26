@@ -96,9 +96,18 @@ class _UserSearchPageState extends ConsumerState<UserSearchPage> {
                   controller: _controller,
                   autofocus: true,
                   textInputAction: TextInputAction.search,
+                  style: TextStyle(
+                    color: scheme.onSurface,
+                    fontSize: 15,
+                  ),
                   decoration: InputDecoration(
                     hintText: 'Username, Nami ID or display name…',
+                    hintStyle: TextStyle(
+                      color: scheme.onSurfaceVariant.withValues(alpha: 0.6),
+                      fontSize: 15,
+                    ),
                     prefixIcon: const Icon(Icons.search, size: AppSpacing.inputIcon),
+                    prefixIconColor: scheme.onSurfaceVariant,
                     suffixIcon: state.hasQuery
                         ? IconButton(
                             icon: const Icon(Icons.close, size: AppSpacing.cameraIcon),
@@ -109,6 +118,36 @@ class _UserSearchPageState extends ConsumerState<UserSearchPage> {
                             ),
                           )
                         : null,
+                    filled: true,
+                    fillColor: scheme.surfaceContainerHighest,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.lg,
+                      vertical: AppSpacing.md,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                      borderSide: BorderSide(color: scheme.primary, width: 1.5),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                      borderSide: BorderSide(color: scheme.error, width: 1.5),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                      borderSide: BorderSide(color: scheme.error, width: 1.5),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                      borderSide: BorderSide.none,
+                    ),
                   ),
                   onChanged: _onQueryChanged,
                   onSubmitted: (v) {

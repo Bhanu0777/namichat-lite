@@ -19,6 +19,11 @@ class FlowBottomSheet {
       context: context,
       isScrollControlled: isScrollControlled,
       useSafeArea: useSafeArea,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(FlowSpacing.radiusXl),
+        ),
+      ),
       builder: (ctx) => _SheetScaffold(title: title, builder: builder),
     );
   }
@@ -85,14 +90,18 @@ class _SheetScaffold extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: FlowSpacing.md),
                 decoration: BoxDecoration(
                   color: scheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(999),
+                  borderRadius: BorderRadius.circular(FlowSpacing.radiusFull),
                 ),
               ),
             ),
             if (title != null) ...[
               Text(
                 title!,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: scheme.onSurface,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: FlowSpacing.md),

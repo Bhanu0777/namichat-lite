@@ -55,7 +55,11 @@ class FlowTextField extends StatelessWidget {
       maxLines: maxLines,
       autofillHints: autofillHints,
       textCapitalization: textCapitalization,
-      style: TextStyle(color: scheme.onSurface),
+      style: TextStyle(
+        color: scheme.onSurface,
+        fontSize: 15,
+        height: 1.4,
+      ),
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
@@ -63,6 +67,46 @@ class FlowTextField extends StatelessWidget {
         suffixIcon: suffixIcon,
         errorMaxLines: 2,
         floatingLabelBehavior: FloatingLabelBehavior.auto,
+        filled: true,
+        fillColor: scheme.surfaceContainerHighest,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: FlowSpacing.lg,
+          vertical: FlowSpacing.md,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(FlowSpacing.radiusMd),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(FlowSpacing.radiusMd),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(FlowSpacing.radiusMd),
+          borderSide: BorderSide(color: scheme.primary, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(FlowSpacing.radiusMd),
+          borderSide: BorderSide(color: scheme.error, width: 1.5),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(FlowSpacing.radiusMd),
+          borderSide: BorderSide(color: scheme.error, width: 1.5),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(FlowSpacing.radiusMd),
+          borderSide: BorderSide.none,
+        ),
+        labelStyle: TextStyle(
+          color: scheme.onSurfaceVariant,
+          fontSize: 14,
+        ),
+        hintStyle: TextStyle(
+          color: scheme.onSurfaceVariant.withValues(alpha: 0.6),
+          fontSize: 15,
+        ),
+        prefixIconColor: scheme.onSurfaceVariant,
+        suffixIconColor: scheme.onSurfaceVariant,
       ),
     );
   }
@@ -96,14 +140,18 @@ class FlowInfoRow extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: scheme.onSurfaceVariant,
+                  ),
                 ),
                 if (value != null)
                   Text(
                     value!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
+                      color: scheme.onSurface,
                     ),
                   ),
               ],

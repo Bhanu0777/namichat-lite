@@ -220,6 +220,9 @@ class SettingsPage extends ConsumerWidget {
       context: context,
       builder: (_) => AlertDialog(
         title: const Text('Clear cache?'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.xl),
+        ),
         content: const Text(
           'Locally cached user data will be removed. '
           'You will not be logged out.',
@@ -249,6 +252,9 @@ class SettingsPage extends ConsumerWidget {
       context: context,
       builder: (_) => AlertDialog(
         title: const Text('Sign out?'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.xl),
+        ),
         content: const Text('You will need to sign in again to use NamiChat.'),
         actions: [
           TextButton(

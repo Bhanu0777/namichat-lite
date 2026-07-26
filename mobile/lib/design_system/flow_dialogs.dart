@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:namichat_lite/design_system/flow_buttons.dart';
+import 'package:namichat_lite/design_system/flow_spacing.dart';
 
 /// Ocean-styled modal dialog helpers built on [AlertDialog].
 class FlowDialogs {
@@ -25,6 +26,9 @@ class FlowDialogs {
       builder: (ctx) => AlertDialog(
         title: Text(title),
         content: Text(message),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(FlowSpacing.radiusLg),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
@@ -54,6 +58,9 @@ class FlowDialogs {
       builder: (ctx) => AlertDialog(
         title: Text(title),
         content: Text(message),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(FlowSpacing.radiusLg),
+        ),
         actions: [
           FlowButton(
             onPressed: () => Navigator.of(ctx).pop(),

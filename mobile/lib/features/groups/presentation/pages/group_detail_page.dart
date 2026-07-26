@@ -236,6 +236,7 @@ class _GroupDetailScaffold extends ConsumerWidget {
     WidgetRef ref,
     Group group,
   ) {
+    final scheme = Theme.of(context).colorScheme;
     final nameCtrl = TextEditingController(text: group.name);
     final descCtrl =
         TextEditingController(text: group.description ?? '');
@@ -245,6 +246,9 @@ class _GroupDetailScaffold extends ConsumerWidget {
       context: context,
       builder: (_) => AlertDialog(
         title: const Text('Edit group'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.xl),
+        ),
         content: Form(
           key: formKey,
           child: Column(
@@ -252,19 +256,73 @@ class _GroupDetailScaffold extends ConsumerWidget {
             children: [
               TextFormField(
                 controller: nameCtrl,
-                decoration:
-                    const InputDecoration(labelText: 'Group name'),
+                decoration: InputDecoration(
+                  labelText: 'Group name',
+                  filled: true,
+                  fillColor: scheme.surfaceContainerHighest,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.lg,
+                    vertical: AppSpacing.md,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderSide: BorderSide(color: scheme.primary, width: 1.5),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderSide: BorderSide(color: scheme.error, width: 1.5),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderSide: BorderSide(color: scheme.error, width: 1.5),
+                  ),
+                ),
                 validator: (v) =>
                     (v == null || v.trim().isEmpty)
                         ? 'Required'
                         : null,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: descCtrl,
-                decoration:
-                    const InputDecoration(labelText: 'Description'),
                 maxLines: 3,
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  filled: true,
+                  fillColor: scheme.surfaceContainerHighest,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.lg,
+                    vertical: AppSpacing.md,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderSide: BorderSide(color: scheme.primary, width: 1.5),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderSide: BorderSide(color: scheme.error, width: 1.5),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderSide: BorderSide(color: scheme.error, width: 1.5),
+                  ),
+                ),
               ),
             ],
           ),
@@ -302,6 +360,9 @@ class _GroupDetailScaffold extends ConsumerWidget {
       context: context,
       builder: (_) => AlertDialog(
         title: const Text('Delete group?'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.xl),
+        ),
         content: const Text(
           'This will permanently delete the group and all its messages. '
           'This cannot be undone.',
@@ -348,6 +409,9 @@ class _GroupDetailScaffold extends ConsumerWidget {
       context: context,
       builder: (_) => AlertDialog(
         title: Text(isSelf ? 'Leave group?' : 'Remove member?'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.xl),
+        ),
         content: Text(
           isSelf
               ? 'You will no longer have access to this group.'

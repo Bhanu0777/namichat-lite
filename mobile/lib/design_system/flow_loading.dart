@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:namichat_lite/design_system/flow_colors.dart';
 import 'package:namichat_lite/design_system/flow_spacing.dart';
 
 /// Themed circular progress indicator using the Flow primary color.
@@ -12,12 +11,13 @@ class FlowLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return SizedBox(
       width: size,
       height: size,
       child: CircularProgressIndicator(
         strokeWidth: strokeWidth,
-        color: FlowColors.ocean,
+        color: scheme.primary,
       ),
     );
   }
@@ -30,7 +30,7 @@ class FlowButtonLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = color ?? FlowColors.foam;
+    final c = color ?? Theme.of(context).colorScheme.onPrimary;
     return SizedBox(
       width: 18,
       height: 18,
@@ -49,6 +49,7 @@ class FlowPageLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -56,7 +57,7 @@ class FlowPageLoader extends StatelessWidget {
           const FlowLoadingIndicator(size: 36, strokeWidth: 4),
           if (label != null) ...[
             const SizedBox(height: FlowSpacing.md),
-            Text(label!, style: const TextStyle(fontSize: 14)),
+            Text(label!, style: TextStyle(fontSize: 14, color: scheme.onSurfaceVariant)),
           ],
         ],
       ),
