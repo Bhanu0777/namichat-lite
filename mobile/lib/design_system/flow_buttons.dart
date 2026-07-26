@@ -70,6 +70,11 @@ class FlowButton extends StatelessWidget {
     Widget button;
     switch (variant) {
       case FlowButtonVariant.primary:
+        button = FilledButton(
+          onPressed: loading ? null : onPressed,
+          style: style,
+          child: content,
+        );
       case FlowButtonVariant.danger:
         button = FilledButton(
           onPressed: loading ? null : onPressed,
@@ -141,33 +146,81 @@ class FlowButton extends StatelessWidget {
     switch (variant) {
       case FlowButtonVariant.danger:
         return base.copyWith(
-          backgroundColor:
-              WidgetStateProperty.resolveWith((s) => s.contains(WidgetState.disabled)
-                  ? scheme.errorContainer
-                  : scheme.error),
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return scheme.errorContainer;
+            }
+            if (states.contains(WidgetState.pressed)) {
+              return scheme.error.withValues(alpha: 0.8);
+            }
+            return scheme.error;
+          }),
           foregroundColor: WidgetStateProperty.all(scheme.onError),
+          overlayColor: WidgetStateProperty.all(
+            Colors.white.withValues(alpha: 0.08),
+          ),
         );
       case FlowButtonVariant.outline:
         return base.copyWith(
-          side: WidgetStateProperty.all(
-            BorderSide(color: scheme.outline),
-          ),
+          side: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return BorderSide(color: scheme.outlineVariant);
+            }
+            if (states.contains(WidgetState.pressed)) {
+              return BorderSide(color: scheme.primary.withValues(alpha: 0.6));
+            }
+            return BorderSide(color: scheme.primary);
+          }),
           foregroundColor: WidgetStateProperty.all(scheme.primary),
+          overlayColor: WidgetStateProperty.all(
+            scheme.primary.withValues(alpha: 0.08),
+          ),
         );
       case FlowButtonVariant.ghost:
         return base.copyWith(
           foregroundColor: WidgetStateProperty.all(scheme.primary),
-          overlayColor: WidgetStateProperty.all(
-            scheme.primaryContainer.withValues(alpha: 0.12),
-          ),
+          overlayColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.pressed)) {
+              return scheme.primary.withValues(alpha: 0.16);
+            }
+            if (states.contains(WidgetState.hovered)) {
+              return scheme.primary.withValues(alpha: 0.12);
+            }
+            return scheme.primary.withValues(alpha: 0.0);
+          }),
         );
       case FlowButtonVariant.secondary:
         return base.copyWith(
-          backgroundColor: WidgetStateProperty.all(scheme.secondaryContainer),
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return scheme.secondaryContainer.withValues(alpha: 0.6);
+            }
+            if (states.contains(WidgetState.pressed)) {
+              return scheme.secondaryContainer.withValues(alpha: 0.7);
+            }
+            return scheme.secondaryContainer;
+          }),
           foregroundColor: WidgetStateProperty.all(scheme.onSecondaryContainer),
+          overlayColor: WidgetStateProperty.all(
+            scheme.onSecondaryContainer.withValues(alpha: 0.08),
+          ),
         );
       case FlowButtonVariant.primary:
-        return base;
+        return base.copyWith(
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return scheme.primary.withValues(alpha: 0.38);
+            }
+            if (states.contains(WidgetState.pressed)) {
+              return scheme.primary.withValues(alpha: 0.9);
+            }
+            return scheme.primary;
+          }),
+          foregroundColor: WidgetStateProperty.all(scheme.onPrimary),
+          overlayColor: WidgetStateProperty.all(
+            Colors.white.withValues(alpha: 0.08),
+          ),
+        );
     }
   }
 

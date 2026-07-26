@@ -215,6 +215,9 @@ class _ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
             icon: const Icon(Icons.refresh),
             tooltip: 'Reconnect',
             onPressed: onReconnect,
+            style: IconButton.styleFrom(
+              padding: const EdgeInsets.all(AppSpacing.sm),
+            ),
           ),
         const SizedBox(width: AppSpacing.xs),
       ],
@@ -759,6 +762,9 @@ class _SendButton extends StatelessWidget {
         ),
         padding: EdgeInsets.zero,
         tooltip: 'Send',
+        style: IconButton.styleFrom(
+          padding: EdgeInsets.zero,
+        ),
       ),
     );
   }

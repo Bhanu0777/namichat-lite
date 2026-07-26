@@ -102,6 +102,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           IconButton(
             onPressed: () => context.go(RoutePaths.home),
             icon: const Icon(Icons.home_outlined),
+            style: IconButton.styleFrom(
+              padding: const EdgeInsets.all(AppSpacing.sm),
+            ),
           ),
         ],
       ),

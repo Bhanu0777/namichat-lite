@@ -3,7 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:namichat_lite/app/router/route_paths.dart';
-import 'package:namichat_lite/core/theme/app_spacing.dart';
+import 'package:namichat_lite/core/theme/app_gradients.dart';
+import 'package:namichat_lite/core/theme/app_radius.dart';
+import 'package:namichat_lite/design_system/app_shadows.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/groups/domain/entities/group.dart';
 import 'package:namichat_lite/features/groups/presentation/providers/groups_provider.dart';
@@ -24,13 +27,31 @@ class GroupsListPage extends ConsumerWidget {
             icon: const Icon(Icons.group_add_outlined),
             tooltip: 'Join by invite code',
             onPressed: () => context.push(RoutePaths.joinGroup),
+            style: IconButton.styleFrom(
+              padding: const EdgeInsets.all(AppSpacing.sm),
+            ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(RoutePaths.createGroup),
-        icon: const Icon(Icons.add),
-        label: const Text('New group'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        child: Ink(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: AppGradients.brand,
+            boxShadow: AppShadows.elevation2,
+          ),
+          child: InkWell(
+            onTap: () => context.push(RoutePaths.createGroup),
+            borderRadius: AppRadius.fab,
+            child: const Padding(
+              padding: EdgeInsets.all(AppSpacing.md),
+              child: Icon(Icons.add, color: Colors.white),
+            ),
+          ),
+        ),
       ),
       body: _Body(state: state, scheme: scheme, ref: ref),
     );

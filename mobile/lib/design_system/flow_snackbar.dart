@@ -19,7 +19,7 @@ class FlowSnackBar {
     SnackBarAction? action,
   }) {
     final scheme = Theme.of(context).colorScheme;
-    final colors = _resolve(type, scheme);
+    final colors = _resolveColors(type, scheme);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -55,39 +55,10 @@ class FlowSnackBar {
 
   static void warning(BuildContext context, String message) =>
       show(context, message: message, type: FlowStatus.warning);
-
-  static _SnackStyle _resolve(FlowStatus type, ColorScheme scheme) {
-    switch (type) {
-      case FlowStatus.success:
-        return const _SnackStyle(
-          background: FlowColors.success,
-          foreground: Colors.white,
-          icon: Icons.check_circle_outline,
-        );
-      case FlowStatus.warning:
-        return const _SnackStyle(
-          background: FlowColors.warning,
-          foreground: Colors.white,
-          icon: Icons.warning_amber_outlined,
-        );
-      case FlowStatus.danger:
-        return _SnackStyle(
-          background: scheme.error,
-          foreground: scheme.onError,
-          icon: Icons.error_outline,
-        );
-      case FlowStatus.info:
-        return _SnackStyle(
-          background: scheme.primary,
-          foreground: scheme.onPrimary,
-          icon: Icons.info_outline,
-        );
-    }
-  }
 }
 
-class _SnackStyle {
-  const _SnackStyle({
+class _SnackColors {
+  const _SnackColors({
     required this.background,
     required this.foreground,
     required this.icon,
@@ -95,4 +66,33 @@ class _SnackStyle {
   final Color background;
   final Color foreground;
   final IconData icon;
+}
+
+_SnackColors _resolveColors(FlowStatus type, ColorScheme scheme) {
+  switch (type) {
+    case FlowStatus.success:
+      return const _SnackColors(
+        background: FlowColors.success,
+        foreground: Colors.white,
+        icon: Icons.check_circle_outline,
+      );
+    case FlowStatus.warning:
+      return const _SnackColors(
+        background: FlowColors.warning,
+        foreground: Colors.white,
+        icon: Icons.warning_amber_outlined,
+      );
+    case FlowStatus.danger:
+      return _SnackColors(
+        background: scheme.error,
+        foreground: scheme.onError,
+        icon: Icons.error_outline,
+      );
+    case FlowStatus.info:
+      return _SnackColors(
+        background: scheme.primary,
+        foreground: scheme.onPrimary,
+        icon: Icons.info_outline,
+      );
+  }
 }

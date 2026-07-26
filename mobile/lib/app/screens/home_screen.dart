@@ -80,11 +80,17 @@ class HomeScreen extends ConsumerWidget {
             onPressed: () => context.go(RoutePaths.settings),
             icon: const Icon(Icons.settings_outlined),
             tooltip: 'Settings',
+            style: IconButton.styleFrom(
+              padding: const EdgeInsets.all(AppSpacing.sm),
+            ),
           ),
           IconButton(
             onPressed: () => context.go(RoutePaths.profile),
             icon: const Icon(Icons.person_outline),
             tooltip: 'Profile',
+            style: IconButton.styleFrom(
+              padding: const EdgeInsets.all(AppSpacing.sm),
+            ),
           ),
         ],
       ),

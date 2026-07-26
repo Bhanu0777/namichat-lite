@@ -104,6 +104,9 @@ class _UserSearchPageState extends ConsumerState<UserSearchPage> {
                             icon: const Icon(Icons.close, size: AppSpacing.cameraIcon),
                             onPressed: _clearSearch,
                             tooltip: 'Clear',
+                            style: IconButton.styleFrom(
+                              padding: const EdgeInsets.all(AppSpacing.sm),
+                            ),
                           )
                         : null,
                   ),

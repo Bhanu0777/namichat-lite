@@ -83,6 +83,9 @@ class _GroupDetailScaffold extends ConsumerWidget {
                   tooltip: 'Edit group',
                   onPressed: () =>
                       _showEditDialog(context, ref, group),
+                  style: IconButton.styleFrom(
+                    padding: const EdgeInsets.all(AppSpacing.sm),
+                  ),
                 ),
               if (isOwner)
                 IconButton(
@@ -90,6 +93,9 @@ class _GroupDetailScaffold extends ConsumerWidget {
                   tooltip: 'Delete group',
                   onPressed: () =>
                       _confirmDelete(context, ref),
+                  style: IconButton.styleFrom(
+                    padding: const EdgeInsets.all(AppSpacing.sm),
+                  ),
                 ),
             ],
             flexibleSpace: FlexibleSpaceBar(
