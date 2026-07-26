@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:namichat_lite/app/router/route_paths.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/auth/presentation/providers/auth_provider.dart';
 import 'package:namichat_lite/features/auth/presentation/providers/auth_state.dart';
@@ -45,7 +46,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(FlowSpacing.xl),
+            padding: const EdgeInsets.all(AppSpacing.xl),
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 420),
               child: Form(
@@ -54,22 +55,22 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const _AppLogo(),
-                    const SizedBox(height: FlowSpacing.lg),
+                    const SizedBox(height: AppSpacing.lg),
                     Text(
                       'Welcome back',
                       style: Theme.of(context).textTheme.headlineSmall,
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: FlowSpacing.xs),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       'Sign in to continue to NamiChat Lite',
                       style: Theme.of(context).textTheme.bodyMedium,
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: FlowSpacing.lg),
+                    const SizedBox(height: AppSpacing.lg),
                     if (state.errorMessage != null)
                       Padding(
-                        padding: const EdgeInsets.only(bottom: FlowSpacing.md),
+                        padding: const EdgeInsets.only(bottom: AppSpacing.md),
                         child: FlowErrorBanner(message: state.errorMessage!),
                       ),
                     FlowTextField(
@@ -79,7 +80,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       textInputAction: TextInputAction.next,
                       validator: (v) => AuthValidators.required(v, label: 'Email or username'),
                     ),
-                    const SizedBox(height: FlowSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
                     FlowTextField(
                       controller: _passwordController,
                       label: 'Password',
@@ -96,13 +97,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       onSubmitted: (_) => _submit(),
                       validator: (v) => AuthValidators.password(v, minLength: 1),
                     ),
-                    const SizedBox(height: FlowSpacing.xl),
+                    const SizedBox(height: AppSpacing.xl),
                     FlowButton(
                       onPressed: isLoading ? null : _submit,
                       label: 'Sign in',
                       loading: isLoading,
                     ),
-                    const SizedBox(height: FlowSpacing.md),
+                    const SizedBox(height: AppSpacing.md),
                     TextButton(
                       onPressed: () => context.go(RoutePaths.register),
                       child: const Text('Create an account'),
@@ -129,7 +130,7 @@ class _AppLogo extends StatelessWidget {
       backgroundColor: scheme.primaryContainer,
       child: Icon(
         Icons.chat_bubble_outline,
-        size: 36,
+         size: AppSpacing.logoSize,
         color: scheme.onPrimaryContainer,
       ),
     );

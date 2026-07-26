@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:namichat_lite/app/router/route_paths.dart';
+import 'package:namichat_lite/design_system/app_colors.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
+import 'package:namichat_lite/design_system/app_radius.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/auth/presentation/providers/auth_provider.dart';
 import 'package:namichat_lite/features/groups/domain/entities/group.dart';
@@ -92,9 +95,9 @@ class _GroupDetailScaffold extends ConsumerWidget {
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
                 group.name,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w700,
-                  shadows: [Shadow(blurRadius: 8, color: Colors.black54)],
+                  shadows: [Shadow(blurRadius: 8, color: AppColors.error.withValues(alpha: 0.4))],
                 ),
               ),
               background: Container(
@@ -119,7 +122,7 @@ class _GroupDetailScaffold extends ConsumerWidget {
 
           SliverToBoxAdapter(
             child: Padding(
-              padding: FlowSpacing.screenPadding,
+              padding: AppSpacing.pagePadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -132,7 +135,7 @@ class _GroupDetailScaffold extends ConsumerWidget {
                             color: scheme.onSurfaceVariant,
                           ),
                     ),
-                    const SizedBox(height: FlowSpacing.lg),
+                    const SizedBox(height: AppSpacing.lg),
                   ],
 
                   // ── Open chat button ──────────────────────────────────
@@ -144,7 +147,7 @@ class _GroupDetailScaffold extends ConsumerWidget {
                       icon: const Icon(Icons.chat_bubble_outline),
                     ),
 
-                  const SizedBox(height: FlowSpacing.lg),
+                  const SizedBox(height: AppSpacing.lg),
 
                   // ── Invite code card ──────────────────────────────────
                   _InviteCodeCard(
@@ -156,7 +159,7 @@ class _GroupDetailScaffold extends ConsumerWidget {
                         .regenerateInviteCode(),
                   ),
 
-                  const SizedBox(height: FlowSpacing.xl),
+                  const SizedBox(height: AppSpacing.xl),
 
                   // ── Members section header ───────────────────────────
                   Row(
@@ -165,22 +168,21 @@ class _GroupDetailScaffold extends ConsumerWidget {
                         'Members',
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      const SizedBox(width: FlowSpacing.sm),
+                      const SizedBox(width: AppSpacing.sm),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 2),
+                            horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
                         decoration: BoxDecoration(
                           color: scheme.secondaryContainer,
-                          borderRadius: BorderRadius.circular(
-                              FlowSpacing.radiusFull),
+                           borderRadius: BorderRadius.circular(
+                               AppRadius.full),
                         ),
                         child: Text(
                           '${group.memberCount}',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: scheme.onSecondaryContainer,
-                          ),
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: scheme.onSecondaryContainer,
+                              ),
                         ),
                       ),
                     ],
@@ -193,7 +195,7 @@ class _GroupDetailScaffold extends ConsumerWidget {
           // ── Members list ───────────────────────────────────────────
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(
-              FlowSpacing.lg, 0, FlowSpacing.lg, FlowSpacing.xxl,
+              AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.xxl,
             ),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
@@ -394,32 +396,32 @@ class _InviteCodeCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return FlowCard(
-      padding: const EdgeInsets.all(FlowSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Icon(Icons.key_outlined, size: 18, color: scheme.primary),
-              const SizedBox(width: FlowSpacing.sm),
+              const SizedBox(width: AppSpacing.sm),
               Text(
                 'Invite code',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ],
           ),
-          const SizedBox(height: FlowSpacing.md),
+          const SizedBox(height: AppSpacing.md),
 
           // Code display
           Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: FlowSpacing.lg,
-              vertical: FlowSpacing.md,
+              horizontal: AppSpacing.lg,
+              vertical: AppSpacing.md,
             ),
             decoration: BoxDecoration(
               color: scheme.surfaceContainerHighest,
               borderRadius:
-                  BorderRadius.circular(FlowSpacing.radiusMd),
+                  BorderRadius.circular(AppRadius.md),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -446,7 +448,7 @@ class _InviteCodeCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: FlowSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
 
           Text(
             'Share this code to invite people to the group.',
@@ -457,7 +459,7 @@ class _InviteCodeCard extends StatelessWidget {
           ),
 
           if (isOwner) ...[
-            const SizedBox(height: FlowSpacing.md),
+            const SizedBox(height: AppSpacing.md),
             FlowButton(
               onPressed: isLoading ? null : onRegenerate,
               label: 'Regenerate code',
@@ -508,7 +510,7 @@ class _MemberTile extends StatelessWidget {
     final accent  = HSLColor.fromAHSL(1, hue, 0.55, 0.45).toColor();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: FlowSpacing.xs),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       child: Row(
         children: [
           // Avatar
@@ -529,7 +531,7 @@ class _MemberTile extends StatelessWidget {
                   )
                 : null,
           ),
-          const SizedBox(width: FlowSpacing.md),
+          const SizedBox(width: AppSpacing.md),
 
           // Name + role
           Expanded(
@@ -547,11 +549,11 @@ class _MemberTile extends StatelessWidget {
                       ),
                     ),
                     if (isGroupOwner) ...[
-                      const SizedBox(width: FlowSpacing.xs),
+                      const SizedBox(width: AppSpacing.xs),
                       _RoleBadge(
                           label: 'Owner', color: scheme.primary),
                     ] else if (member.isAdmin) ...[
-                      const SizedBox(width: FlowSpacing.xs),
+                      const SizedBox(width: AppSpacing.xs),
                       _RoleBadge(
                           label: 'Admin',
                           color: scheme.secondary),
@@ -598,11 +600,11 @@ class _MemberTile extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(
                       isSelf ? Icons.logout : Icons.remove_circle_outline,
-                      color: Colors.red,
+                      color: AppColors.error,
                     ),
                     title: Text(
                       isSelf ? 'Leave group' : 'Remove',
-                      style: const TextStyle(color: Colors.red),
+                      style: const TextStyle(color: AppColors.error),
                     ),
                     contentPadding: EdgeInsets.zero,
                     dense: true,
@@ -626,11 +628,11 @@ class _RoleBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding:
-            const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            const EdgeInsets.symmetric(horizontal: AppSpacing.tinyDot, vertical: AppSpacing.xs),
         decoration: BoxDecoration(
           color: color.withValues(alpha: 0.12),
           borderRadius:
-              BorderRadius.circular(FlowSpacing.radiusFull),
+              BorderRadius.circular(AppRadius.full),
           border: Border.all(color: color.withValues(alpha: 0.4)),
         ),
         child: Text(

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:namichat_lite/app/router/route_paths.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/groups/presentation/providers/groups_provider.dart';
 
@@ -59,7 +60,7 @@ class _JoinGroupPageState extends ConsumerState<JoinGroupPage> {
       appBar: AppBar(title: const Text('Join a group')),
       body: SafeArea(
         child: Padding(
-          padding: FlowSpacing.screenPadding,
+          padding: AppSpacing.pagePadding,
           child: Form(
             key: _formKey,
             child: Column(
@@ -67,34 +68,36 @@ class _JoinGroupPageState extends ConsumerState<JoinGroupPage> {
               children: [
                 // ---- Hero illustration ----
                 Center(
-                  child: Container(
-                    width: 96,
-                    height: 96,
-                    decoration: BoxDecoration(
-                      color: scheme.primaryContainer,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.group_add_outlined,
-                      size: 48,
-                      color: scheme.onPrimaryContainer,
+                  child: SizedBox(
+                    width: AppSpacing.heroSize,
+                    height: AppSpacing.heroSize,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: scheme.primaryContainer,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.group_add_outlined,
+                        size: AppSpacing.heroSize,
+                        color: scheme.onPrimaryContainer,
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: FlowSpacing.xl),
+                const SizedBox(height: AppSpacing.xl),
 
                 Text(
                   'Enter invite code',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
-                const SizedBox(height: FlowSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
                   'Ask a group admin for their 8-character invite code.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: scheme.onSurfaceVariant,
                       ),
                 ),
-                const SizedBox(height: FlowSpacing.xl),
+                const SizedBox(height: AppSpacing.xl),
 
                 // ---- Code input ----
                 FlowTextField(
@@ -102,7 +105,7 @@ class _JoinGroupPageState extends ConsumerState<JoinGroupPage> {
                   hint: 'e.g. A3KP9XZW',
                   prefixIcon: const Icon(Icons.key_outlined),
                   suffixIcon: IconButton(
-                    icon: const Icon(Icons.content_paste_outlined, size: 20),
+                    icon: Icon(Icons.content_paste_outlined, size: AppSpacing.iconSize),
                     onPressed: _pasteFromClipboard,
                     tooltip: 'Paste',
                   ),
@@ -119,7 +122,7 @@ class _JoinGroupPageState extends ConsumerState<JoinGroupPage> {
                     return null;
                   },
                 ),
-                const SizedBox(height: FlowSpacing.xxl),
+                const SizedBox(height: AppSpacing.xxl),
 
                 FlowButton(
                   onPressed: _isLoading ? null : _join,

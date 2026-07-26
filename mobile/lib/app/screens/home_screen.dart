@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import 'package:namichat_lite/core/di/injection_container.dart';
+import 'package:namichat_lite/design_system/app_colors.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/app/router/route_paths.dart';
 
@@ -41,7 +43,7 @@ final homeChatsProvider = FutureProvider<List<HomeChatPreview>>((ref) async {
             timestamp: _formatTime(c.lastMessage?.createdAt ?? c.updatedAt),
             unreadCount: c.unreadCount,
             avatarLabel: c.title.isEmpty ? '?' : c.title[0].toUpperCase(),
-            accentColor: const Color(0xFF6C63FF),
+            accentColor: AppColors.primary,
             online: false,
             chatId: c.id,
           ),
@@ -98,24 +100,22 @@ class HomeScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Welcome back',
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                color: scheme.onSurfaceVariant,
-                              ),
-                        ),
-                        const SizedBox(height: FlowSpacing.xs),
-                        Text(
-                          'Your conversations are ready to continue.',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        const SizedBox(height: FlowSpacing.md),
-                        Text(
-                          'Jump into the latest chats, search for people, or start a new group.',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: scheme.onSurfaceVariant,
-                              ),
-                        ),
+                         Text(
+                           'Welcome back',
+                           style: Theme.of(context).textTheme.titleMedium,
+                         ),
+                         const SizedBox(height: AppSpacing.xs),
+                         Text(
+                           'Your conversations are ready to continue.',
+                           style: Theme.of(context).textTheme.headlineSmall,
+                         ),
+                         const SizedBox(height: AppSpacing.md),
+                         Text(
+                           'Jump into the latest chats, search for people, or start a new group.',
+                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                 color: scheme.onSurfaceVariant,
+                               ),
+                         ),
                       ],
                     ),
                   ),
@@ -225,8 +225,8 @@ class HomeScreen extends ConsumerWidget {
                                 right: 0,
                                 bottom: 0,
                                 child: Container(
-                                  width: 12,
-                                  height: 12,
+                                  width: AppSpacing.xs + 4,
+                                  height: AppSpacing.xs + 4,
                                   decoration: BoxDecoration(
                                     color: scheme.primary,
                                     shape: BoxShape.circle,
@@ -246,7 +246,7 @@ class HomeScreen extends ConsumerWidget {
                                   Expanded(
                                     child: Text(
                                       chat.title,
-                                      style: Theme.of(context).textTheme.titleSmall,
+                                      style: Theme.of(context).textTheme.titleMedium,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
@@ -283,11 +283,10 @@ class HomeScreen extends ConsumerWidget {
                             ),
                             child: Text(
                               '${chat.unreadCount}',
-                              style: TextStyle(
-                                color: scheme.onPrimary,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12,
-                              ),
+                               style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                     color: scheme.onPrimary,
+                                     fontWeight: FontWeight.w700,
+                                   ),
                             ),
                           ),
                       ],

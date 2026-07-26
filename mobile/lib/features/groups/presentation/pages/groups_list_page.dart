@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:namichat_lite/app/router/route_paths.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/groups/domain/entities/group.dart';
 import 'package:namichat_lite/features/groups/presentation/providers/groups_provider.dart';
@@ -74,10 +75,10 @@ class _Body extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () => ref.read(groupsListProvider.notifier).load(),
       child: ListView.separated(
-        padding: FlowSpacing.listPadding,
+        padding: AppSpacing.listPadding,
         itemCount: state.groups.length,
         separatorBuilder: (_, __) =>
-            const SizedBox(height: FlowSpacing.sm),
+            const SizedBox(height: AppSpacing.sm),
         itemBuilder: (context, i) =>
             _GroupCard(group: state.groups[i]),
       ),
@@ -102,8 +103,8 @@ class _GroupCard extends StatelessWidget {
     return FlowCard(
       onTap: () => context.push(RoutePaths.groupDetail(group.id)),
       padding: const EdgeInsets.symmetric(
-        horizontal: FlowSpacing.lg,
-        vertical: FlowSpacing.md,
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
       ),
       child: Row(
         children: [
@@ -113,7 +114,7 @@ class _GroupCard extends StatelessWidget {
             backgroundImage: group.avatarUrl != null
                 ? NetworkImage(group.avatarUrl!)
                 : null,
-            backgroundColor: accent.withOpacity(0.15),
+            backgroundColor: accent.withValues(alpha: 0.15),
             child: group.avatarUrl == null
                 ? Text(
                     initials,
@@ -125,7 +126,7 @@ class _GroupCard extends StatelessWidget {
                   )
                 : null,
           ),
-          const SizedBox(width: FlowSpacing.md),
+          const SizedBox(width: AppSpacing.md),
 
           // Info
           Expanded(
@@ -140,12 +141,12 @@ class _GroupCard extends StatelessWidget {
                       ?.copyWith(fontWeight: FontWeight.w600),
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: FlowSpacing.xs),
+                const SizedBox(height: AppSpacing.xs),
                 Row(
                   children: [
                     Icon(Icons.people_outline,
                         size: 13, color: scheme.onSurfaceVariant),
-                    const SizedBox(width: 3),
+                    const SizedBox(width: AppSpacing.tinyDot),
                     Text(
                       '${group.memberCount} member${group.memberCount == 1 ? '' : 's'}',
                       style: Theme.of(context)
@@ -155,16 +156,16 @@ class _GroupCard extends StatelessWidget {
                     ),
                     if (group.description != null &&
                         group.description!.isNotEmpty) ...[
-                      const SizedBox(width: FlowSpacing.sm),
+                      const SizedBox(width: AppSpacing.sm),
                       Container(
-                        width: 3,
-                        height: 3,
+                        width: AppSpacing.tinyDot,
+                        height: AppSpacing.tinyDot,
                         decoration: BoxDecoration(
                           color: scheme.onSurfaceVariant,
                           shape: BoxShape.circle,
                         ),
                       ),
-                      const SizedBox(width: FlowSpacing.sm),
+                      const SizedBox(width: AppSpacing.sm),
                       Flexible(
                         child: Text(
                           group.description!,

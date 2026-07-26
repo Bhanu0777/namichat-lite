@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:namichat_lite/app/router/route_paths.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/profile/presentation/providers/profile_provider.dart';
 import 'package:namichat_lite/features/profile/presentation/providers/profile_state.dart';
@@ -108,7 +109,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         child: state.status == ProfileStatus.loading && state.user == null
             ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
-                padding: const EdgeInsets.all(FlowSpacing.xl),
+                padding: const EdgeInsets.all(AppSpacing.xl),
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 480),
                   child: Form(
@@ -118,62 +119,62 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       children: [
                         if (state.errorMessage != null)
                           Padding(
-                            padding: const EdgeInsets.only(bottom: FlowSpacing.md),
+                            padding: const EdgeInsets.only(bottom: AppSpacing.md),
                             child: FlowErrorBanner(message: state.errorMessage!),
                           ),
                         Center(
                           child: CircleAvatar(
                             radius: 42,
                             backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                            child: const Icon(Icons.person_outline, size: 40),
+                            child: Icon(Icons.person_outline, size: AppSpacing.tileIcon),
                           ),
                         ),
-                        const SizedBox(height: FlowSpacing.lg),
+                        const SizedBox(height: AppSpacing.lg),
                         FlowTextField(
                           controller: _avatarUrlController,
                           label: 'Avatar URL',
                           hint: 'https://example.com/avatar.png',
                         ),
-                        const SizedBox(height: FlowSpacing.md),
+                        const SizedBox(height: AppSpacing.md),
                         FlowTextField(
                           controller: _emailController,
                           label: 'Email',
                           keyboardType: TextInputType.emailAddress,
                           validator: ProfileValidators.email,
                         ),
-                        const SizedBox(height: FlowSpacing.md),
+                        const SizedBox(height: AppSpacing.md),
                         FlowTextField(
                           controller: _usernameController,
                           label: 'Username',
                           validator: ProfileValidators.username,
                         ),
-                        const SizedBox(height: FlowSpacing.md),
+                        const SizedBox(height: AppSpacing.md),
                         FlowTextField(
                           controller: _displayNameController,
                           label: 'Display name',
                         ),
-                        const SizedBox(height: FlowSpacing.md),
+                        const SizedBox(height: AppSpacing.md),
                         FlowTextField(
                           controller: _namiIdController,
                           label: 'Nami ID',
                           hint: 'e.g. nami-hero',
                           validator: ProfileValidators.namiId,
                         ),
-                        const SizedBox(height: FlowSpacing.md),
+                        const SizedBox(height: AppSpacing.md),
                         FlowTextField(
                           controller: _bioController,
                           label: 'Bio',
                           maxLines: 3,
                           validator: ProfileValidators.bio,
                         ),
-                        const SizedBox(height: FlowSpacing.xl),
-                        const SizedBox(height: FlowSpacing.md),
+                        const SizedBox(height: AppSpacing.xl),
+                        const SizedBox(height: AppSpacing.md),
                         FlowButton(
                           onPressed: isLoading ? null : _submit,
                           label: 'Save profile',
                           loading: isLoading,
                         ),
-                        const SizedBox(height: FlowSpacing.md),
+                        const SizedBox(height: AppSpacing.md),
                         FlowButton(
                           onPressed: () => context.go(RoutePaths.editProfile),
                           label: 'Edit profile',

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:namichat_lite/design_system/app_colors.dart';
+import 'package:namichat_lite/design_system/app_radius.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
+
 /// Central Material 3 theme definitions for light and dark modes.
 class AppTheme {
   AppTheme._();
 
-  static const _seed = Color(0xFF2563EB);
+  static const _seed = AppColors.primary;
 
   static ThemeData get light => ThemeData(
         useMaterial3: true,
@@ -17,23 +21,23 @@ class AppTheme {
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
+            borderRadius: BorderRadius.all(Radius.circular(AppRadius.md)),
             borderSide: BorderSide.none,
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size.fromHeight(48),
+            minimumSize: const Size.fromHeight(AppSpacing.buttonHeight),
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
+              borderRadius: BorderRadius.all(Radius.circular(AppRadius.md)),
             ),
           ),
         ),
         cardTheme: const CardThemeData(
           elevation: 1,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+            borderRadius: BorderRadius.all(Radius.circular(AppRadius.lg)),
           ),
         ),
       );
@@ -49,23 +53,23 @@ class AppTheme {
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
+            borderRadius: BorderRadius.all(Radius.circular(AppRadius.md)),
             borderSide: BorderSide.none,
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size.fromHeight(48),
+            minimumSize: const Size.fromHeight(AppSpacing.buttonHeight),
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
+              borderRadius: BorderRadius.all(Radius.circular(AppRadius.md)),
             ),
           ),
         ),
         cardTheme: const CardThemeData(
           elevation: 1,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+            borderRadius: BorderRadius.all(Radius.circular(AppRadius.lg)),
           ),
         ),
       );

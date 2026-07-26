@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import 'package:namichat_lite/design_system/app_radius.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/chat/domain/entities/message.dart';
 import 'package:namichat_lite/features/chat/presentation/providers/chat_provider.dart';
@@ -165,14 +167,12 @@ class _ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
               state.chatId.isNotEmpty
                   ? state.chatId[0].toUpperCase()
                   : '?',
-              style: TextStyle(
-                color: scheme.onPrimaryContainer,
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
-              ),
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
             ),
           ),
-          const SizedBox(width: FlowSpacing.sm),
+          const SizedBox(width: AppSpacing.sm),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -186,8 +186,8 @@ class _ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
               Row(
                 children: [
                   Container(
-                    width: 7,
-                    height: 7,
+                    width: AppSpacing.microDot,
+                    height: AppSpacing.microDot,
                     decoration: BoxDecoration(
                       color: statusColor,
                       shape: BoxShape.circle,
@@ -196,10 +196,10 @@ class _ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                   const SizedBox(width: 4),
                   Text(
                     statusLabel,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: statusColor,
-                          fontSize: 11,
-                        ),
+                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                         color: statusColor,
+                         fontSize: AppSpacing.xs + 3,
+                       ),
                   ),
                 ],
               ),
@@ -216,7 +216,7 @@ class _ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
             tooltip: 'Reconnect',
             onPressed: onReconnect,
           ),
-        const SizedBox(width: FlowSpacing.xs),
+        const SizedBox(width: AppSpacing.xs),
       ],
     );
   }
@@ -248,8 +248,8 @@ class _ConnectionBanner extends StatelessWidget {
         onTap: onRetry,
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: FlowSpacing.lg,
-            vertical: FlowSpacing.sm,
+            horizontal: AppSpacing.lg,
+            vertical: AppSpacing.sm,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -260,20 +260,18 @@ class _ConnectionBanner extends StatelessWidget {
                     : isError
                         ? Icons.lock_outline
                         : Icons.wifi_off,
-                size: 16,
+                size: AppSpacing.cameraIcon,
                 color: isError
                     ? scheme.onErrorContainer
                     : scheme.onSurfaceVariant,
               ),
-              const SizedBox(width: FlowSpacing.sm),
+              const SizedBox(width: AppSpacing.sm),
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: isError
-                      ? scheme.onErrorContainer
-                      : scheme.onSurfaceVariant,
-                ),
+                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                         color: scheme.onErrorContainer,
+                         fontSize: AppSpacing.xs + 4,
+                       ),
               ),
             ],
           ),
@@ -320,8 +318,8 @@ class _MessageList extends StatelessWidget {
     return ListView.builder(
       controller: scrollController,
       padding: const EdgeInsets.symmetric(
-        horizontal: FlowSpacing.md,
-        vertical: FlowSpacing.sm,
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
       ),
       itemCount: state.messages.length +
           (state.isLoadingHistory ? 1 : 0),
@@ -329,7 +327,7 @@ class _MessageList extends StatelessWidget {
         // Top-of-list spinner while loading older history.
         if (state.isLoadingHistory && index == 0) {
           return const Padding(
-            padding: EdgeInsets.symmetric(vertical: FlowSpacing.md),
+            padding: EdgeInsets.symmetric(vertical: AppSpacing.md),
             child: Center(child: FlowLoadingIndicator()),
           );
         }
@@ -383,19 +381,18 @@ class _DateSeparator extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: FlowSpacing.md),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
       child: Row(
         children: [
           Expanded(child: Divider(color: scheme.outlineVariant)),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: FlowSpacing.sm),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
             child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-                color: scheme.onSurfaceVariant,
-              ),
+                 label,
+                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                       color: scheme.onSurfaceVariant,
+                       fontWeight: FontWeight.w500,
+                     ),
             ),
           ),
           Expanded(child: Divider(color: scheme.outlineVariant)),
@@ -427,8 +424,8 @@ class _MessageBubble extends StatelessWidget {
     final timeColor =
         isOwn ? scheme.onPrimary.withValues(alpha: 0.7) : scheme.onSurfaceVariant;
 
-    const radius = Radius.circular(FlowSpacing.radiusMd);
-    const tightRadius = Radius.circular(4);
+    const radius = Radius.circular(AppRadius.md);
+    const tightRadius = Radius.circular(AppRadius.xs);
 
     final shape = BorderRadius.only(
       topLeft: radius,
@@ -438,7 +435,7 @@ class _MessageBubble extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs / 2),
       child: Align(
         alignment: isOwn ? Alignment.centerRight : Alignment.centerLeft,
         child: ConstrainedBox(
@@ -449,8 +446,8 @@ class _MessageBubble extends StatelessWidget {
             onLongPress: () => _copyToClipboard(context, message.content),
             child: Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: FlowSpacing.md,
-                vertical: FlowSpacing.sm,
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.sm,
               ),
               decoration: BoxDecoration(
                 color: message.isPending
@@ -481,7 +478,7 @@ class _MessageBubble extends StatelessWidget {
                         style: TextStyle(fontSize: 10, color: timeColor),
                       ),
                       if (isOwn) ...[
-                        const SizedBox(width: 3),
+                          const SizedBox(width: AppSpacing.tinyDot),
                         Icon(
                           message.isPending
                               ? Icons.access_time
@@ -581,7 +578,7 @@ class _TypingIndicatorState extends State<_TypingIndicator>
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-        FlowSpacing.lg, 0, FlowSpacing.lg, FlowSpacing.sm,
+        AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.sm,
       ),
       child: Row(
         children: [
@@ -598,15 +595,15 @@ class _TypingIndicatorState extends State<_TypingIndicator>
               ],
             ),
           ),
-          const SizedBox(width: FlowSpacing.sm),
+          const SizedBox(width: AppSpacing.sm),
           Flexible(
             child: Text(
               label,
-              style: TextStyle(
-                fontSize: 12,
-                color: scheme.onSurfaceVariant,
-                fontStyle: FontStyle.italic,
-              ),
+                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                       color: scheme.onSurfaceVariant,
+                       fontSize: AppSpacing.xs + 3,
+                       fontStyle: FontStyle.italic,
+                     ),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -617,12 +614,16 @@ class _TypingIndicatorState extends State<_TypingIndicator>
 
   Widget _dot(ColorScheme scheme, double dy) => Transform.translate(
         offset: Offset(0, dy),
-        child: Container(
-          width: 7,
-          height: 7,
-          decoration: BoxDecoration(
-            color: scheme.primary,
-            shape: BoxShape.circle,
+        child: SizedBox(
+          width: AppSpacing.microDot,
+          height: AppSpacing.microDot,
+          child: Container(
+            width: AppSpacing.microDot,
+            height: AppSpacing.microDot,
+            decoration: BoxDecoration(
+              color: scheme.primary,
+              shape: BoxShape.circle,
+            ),
           ),
         ),
       );
@@ -655,10 +656,10 @@ class _InputBar extends StatelessWidget {
       top: false,
       child: Container(
         padding: const EdgeInsets.fromLTRB(
-          FlowSpacing.md,
-          FlowSpacing.sm,
-          FlowSpacing.sm,
-          FlowSpacing.sm,
+          AppSpacing.md,
+          AppSpacing.sm,
+          AppSpacing.sm,
+          AppSpacing.sm,
         ),
         decoration: BoxDecoration(
           color: scheme.surface,
@@ -693,36 +694,36 @@ class _InputBar extends StatelessWidget {
                     ),
                     filled: true,
                     fillColor: scheme.surfaceContainerHighest,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: FlowSpacing.md,
-                      vertical: FlowSpacing.sm,
-                    ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.sm,
+        ),
                     border: OutlineInputBorder(
                       borderRadius:
-                          BorderRadius.circular(FlowSpacing.radiusLg),
+                          BorderRadius.circular(AppRadius.lg),
                       borderSide: BorderSide.none,
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius:
-                          BorderRadius.circular(FlowSpacing.radiusLg),
+                          BorderRadius.circular(AppRadius.lg),
                       borderSide: BorderSide.none,
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius:
-                          BorderRadius.circular(FlowSpacing.radiusLg),
+                          BorderRadius.circular(AppRadius.lg),
                       borderSide:
                           BorderSide(color: scheme.primary, width: 1.5),
                     ),
                     disabledBorder: OutlineInputBorder(
                       borderRadius:
-                          BorderRadius.circular(FlowSpacing.radiusLg),
+                          BorderRadius.circular(AppRadius.lg),
                       borderSide: BorderSide.none,
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: FlowSpacing.sm),
+            const SizedBox(width: AppSpacing.sm),
             // Send button
             _SendButton(enabled: enabled, onSend: onSend),
           ],
@@ -743,8 +744,8 @@ class _SendButton extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
-      width: 44,
-      height: 44,
+      width: AppSpacing.sendButton,
+      height: AppSpacing.sendButton,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: enabled ? scheme.primary : scheme.surfaceContainerHighest,
@@ -753,7 +754,7 @@ class _SendButton extends StatelessWidget {
         onPressed: enabled ? onSend : null,
         icon: Icon(
           Icons.send_rounded,
-          size: 20,
+          size: AppSpacing.iconSize,
           color: enabled ? scheme.onPrimary : scheme.onSurfaceVariant,
         ),
         padding: EdgeInsets.zero,

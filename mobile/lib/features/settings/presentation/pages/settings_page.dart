@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:namichat_lite/app/router/route_paths.dart';
 import 'package:namichat_lite/core/constants/app_constants.dart';
 import 'package:namichat_lite/core/di/injection_container.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
+import 'package:namichat_lite/design_system/app_radius.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/auth/domain/entities/user.dart';
 import 'package:namichat_lite/features/auth/presentation/providers/auth_provider.dart';
@@ -25,7 +27,7 @@ class SettingsPage extends ConsumerWidget {
       appBar: AppBar(title: const Text('Settings')),
       body: SafeArea(
         child: ListView(
-          padding: FlowSpacing.screenPadding,
+          padding: AppSpacing.pagePadding,
           children: [
 
             // ── Account card ─────────────────────────────────────────
@@ -45,7 +47,7 @@ class SettingsPage extends ConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: FlowSpacing.xl),
+              const SizedBox(height: AppSpacing.xl),
             ],
 
             // ── Appearance ───────────────────────────────────────────
@@ -86,7 +88,7 @@ class SettingsPage extends ConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox(height: FlowSpacing.xl),
+            const SizedBox(height: AppSpacing.xl),
 
             // ── Storage ──────────────────────────────────────────────
             const _SectionHeader(label: 'Storage'),
@@ -97,23 +99,23 @@ class SettingsPage extends ConsumerWidget {
                   // Cache info row
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: FlowSpacing.lg,
-                      vertical: FlowSpacing.md,
+                      horizontal: AppSpacing.lg,
+                      vertical: AppSpacing.md,
                     ),
                     child: Row(
                       children: [
                         Container(
-                          width: 40,
-                          height: 40,
+                          width: AppSpacing.tileIcon,
+                          height: AppSpacing.tileIcon,
                           decoration: BoxDecoration(
                             color: scheme.secondaryContainer,
                             borderRadius:
-                                BorderRadius.circular(FlowSpacing.radiusMd),
+                                BorderRadius.circular(AppRadius.md),
                           ),
-                          child: Icon(Icons.storage_outlined,
-                              size: 20, color: scheme.onSecondaryContainer),
+                          child:                           Icon(Icons.storage_outlined,
+                              size: AppSpacing.iconSize, color: scheme.onSecondaryContainer),
                         ),
-                        const SizedBox(width: FlowSpacing.md),
+                        const SizedBox(width: AppSpacing.md),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,8 +145,8 @@ class SettingsPage extends ConsumerWidget {
                     subtitle: 'Removes locally cached user data',
                     trailing: cacheInfo.isClearing
                         ? const SizedBox(
-                            width: 18,
-                            height: 18,
+                            width: AppSpacing.xs + 2,
+                            height: AppSpacing.xs + 2,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
                         : null,
@@ -156,7 +158,7 @@ class SettingsPage extends ConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox(height: FlowSpacing.xl),
+            const SizedBox(height: AppSpacing.xl),
 
             // ── About ────────────────────────────────────────────────
             const _SectionHeader(label: 'About'),
@@ -190,7 +192,7 @@ class SettingsPage extends ConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox(height: FlowSpacing.xl),
+            const SizedBox(height: AppSpacing.xl),
 
             // ── Danger zone ──────────────────────────────────────────
             const _SectionHeader(label: 'Session'),
@@ -204,7 +206,7 @@ class SettingsPage extends ConsumerWidget {
               ),
             ),
 
-            const SizedBox(height: FlowSpacing.xxxl),
+            const SizedBox(height: AppSpacing.xxxl),
           ],
         ),
       ),
@@ -280,8 +282,8 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(
-          left: FlowSpacing.sm,
-          bottom: FlowSpacing.sm,
+          left: AppSpacing.sm,
+          bottom: AppSpacing.sm,
         ),
         child: Text(
           label.toUpperCase(),
@@ -308,7 +310,7 @@ class _AccountTile extends StatelessWidget {
     final initials = name.isNotEmpty ? name[0].toUpperCase() : '?';
 
     return Padding(
-      padding: const EdgeInsets.all(FlowSpacing.lg),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Row(
         children: [
           CircleAvatar(
@@ -323,7 +325,7 @@ class _AccountTile extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: FlowSpacing.md),
+          const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -376,29 +378,31 @@ class _ThemeTile extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: FlowSpacing.lg,
-          vertical: FlowSpacing.md,
+          horizontal: AppSpacing.lg,
+          vertical: AppSpacing.md,
         ),
         child: Row(
           children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: isSelected
-                    ? scheme.primaryContainer
-                    : scheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(FlowSpacing.radiusMd),
-              ),
-              child: Icon(
-                icon,
-                size: 20,
-                color: isSelected
-                    ? scheme.onPrimaryContainer
-                    : scheme.onSurfaceVariant,
+            SizedBox(
+              width: AppSpacing.tileIcon,
+              height: AppSpacing.tileIcon,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? scheme.primaryContainer
+                      : scheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(AppRadius.md),
+                ),
+                child: Icon(
+                  icon,
+                  size: AppSpacing.iconSize,
+                  color: isSelected
+                      ? scheme.onPrimaryContainer
+                      : scheme.onSurfaceVariant,
+                ),
               ),
             ),
-            const SizedBox(width: FlowSpacing.md),
+            const SizedBox(width: AppSpacing.md),
             Expanded(
               child: Text(
                 label,
@@ -452,21 +456,23 @@ class _SettingsTile extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: FlowSpacing.lg,
-          vertical: FlowSpacing.md,
+          horizontal: AppSpacing.lg,
+          vertical: AppSpacing.md,
         ),
         child: Row(
           children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: bgColor,
-                borderRadius: BorderRadius.circular(FlowSpacing.radiusMd),
+            SizedBox(
+              width: AppSpacing.tileIcon,
+              height: AppSpacing.tileIcon,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: bgColor,
+                  borderRadius: BorderRadius.circular(AppRadius.md),
+                ),
+                child: Icon(icon, size: AppSpacing.iconSize, color: iconColor),
               ),
-              child: Icon(icon, size: 20, color: iconColor),
             ),
-            const SizedBox(width: FlowSpacing.md),
+            const SizedBox(width: AppSpacing.md),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -517,21 +523,23 @@ class _InfoTile extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: FlowSpacing.lg,
-        vertical: FlowSpacing.md,
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
       ),
       child: Row(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: scheme.surfaceContainerHighest,
-              borderRadius: BorderRadius.circular(FlowSpacing.radiusMd),
+          SizedBox(
+            width: AppSpacing.tileIcon,
+            height: AppSpacing.tileIcon,
+            child: Container(
+              decoration: BoxDecoration(
+                color: scheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(AppRadius.md),
+              ),
+              child: Icon(icon, size: AppSpacing.iconSize, color: scheme.onSurfaceVariant),
             ),
-            child: Icon(icon, size: 20, color: scheme.onSurfaceVariant),
           ),
-          const SizedBox(width: FlowSpacing.md),
+          const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

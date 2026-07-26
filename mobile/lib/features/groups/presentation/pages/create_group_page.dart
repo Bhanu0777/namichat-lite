@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:namichat_lite/app/router/route_paths.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/groups/presentation/providers/groups_provider.dart';
 
@@ -57,7 +58,7 @@ class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
       appBar: AppBar(title: const Text('New group')),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: FlowSpacing.screenPadding,
+          padding: AppSpacing.pagePadding,
           child: Form(
             key: _formKey,
             child: Column(
@@ -72,7 +73,7 @@ class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
                         backgroundColor: scheme.primaryContainer,
                         child: Icon(
                           Icons.group,
-                          size: 44,
+                           size: AppSpacing.groupAvatar,
                           color: scheme.onPrimaryContainer,
                         ),
                       ),
@@ -88,18 +89,18 @@ class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
                                 color: scheme.surface, width: 2),
                           ),
                           child: Icon(Icons.camera_alt,
-                              size: 16, color: scheme.onPrimary),
+                              size: AppSpacing.cameraIcon, color: scheme.onPrimary),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: FlowSpacing.xl),
+                const SizedBox(height: AppSpacing.xl),
 
                 // ---- Group name ----
                 Text('Group name',
                     style: Theme.of(context).textTheme.labelLarge),
-                const SizedBox(height: FlowSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 FlowTextField(
                   controller: _nameCtrl,
                   hint: 'e.g. Design Crew, Study Group…',
@@ -116,12 +117,12 @@ class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
                     return null;
                   },
                 ),
-                const SizedBox(height: FlowSpacing.lg),
+                const SizedBox(height: AppSpacing.lg),
 
                 // ---- Description ----
                 Text('Description (optional)',
                     style: Theme.of(context).textTheme.labelLarge),
-                const SizedBox(height: FlowSpacing.sm),
+                const SizedBox(height: AppSpacing.sm),
                 FlowTextField(
                   controller: _descCtrl,
                   hint: "What's this group about?",
@@ -136,16 +137,16 @@ class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
                     return null;
                   },
                 ),
-                const SizedBox(height: FlowSpacing.xl),
+                const SizedBox(height: AppSpacing.xl),
 
                 // ---- Info box ----
                 FlowCard(
-                  padding: const EdgeInsets.all(FlowSpacing.md),
+                  padding: const EdgeInsets.all(AppSpacing.md),
                   child: Row(
                     children: [
                       Icon(Icons.info_outline,
-                          size: 18, color: scheme.primary),
-                      const SizedBox(width: FlowSpacing.sm),
+                                                     size: AppSpacing.infoIcon, color: scheme.primary),
+                      const SizedBox(width: AppSpacing.sm),
                       Expanded(
                         child: Text(
                           'An invite code is generated automatically. '
@@ -159,7 +160,7 @@ class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: FlowSpacing.xxl),
+                const SizedBox(height: AppSpacing.xxl),
 
                 // ---- Submit ----
                 FlowButton(

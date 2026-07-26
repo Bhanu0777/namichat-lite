@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:namichat_lite/app/router/route_paths.dart';
+import 'package:namichat_lite/design_system/app_radius.dart';
+import 'package:namichat_lite/design_system/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/chat/domain/entities/user_search_result.dart';
 import 'package:namichat_lite/features/chat/presentation/providers/chat_search_provider.dart';
@@ -43,7 +45,6 @@ class _UserSearchPageState extends ConsumerState<UserSearchPage> {
   }
 
   Future<void> _onUserTapped(UserSearchResult user) async {
-    // If chat already known, navigate immediately — no network call.
     if (user.hasChatAlready) {
       if (mounted) unawaited(context.push(RoutePaths.chatWithId(user.existingChatId!)));
       return;
@@ -63,7 +64,6 @@ class _UserSearchPageState extends ConsumerState<UserSearchPage> {
     final state = ref.watch(chatSearchProvider);
     final scheme = Theme.of(context).colorScheme;
 
-    // Show open-chat error as a snackbar.
     ref.listen<ChatSearchState>(chatSearchProvider, (prev, next) {
       if (next.openChatError != null &&
           prev?.openChatError != next.openChatError) {
@@ -85,24 +85,23 @@ class _UserSearchPageState extends ConsumerState<UserSearchPage> {
           preferredSize: const Size.fromHeight(116),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(
-              FlowSpacing.lg,
+              AppSpacing.lg,
               0,
-              FlowSpacing.lg,
-              FlowSpacing.md,
+              AppSpacing.lg,
+              AppSpacing.md,
             ),
             child: Column(
               children: [
-                // ---- Search field ----
                 TextField(
                   controller: _controller,
                   autofocus: true,
                   textInputAction: TextInputAction.search,
                   decoration: InputDecoration(
                     hintText: 'Username, Nami ID or display name…',
-                    prefixIcon: const Icon(Icons.search, size: 20),
+                    prefixIcon: const Icon(Icons.search, size: AppSpacing.inputIcon),
                     suffixIcon: state.hasQuery
                         ? IconButton(
-                            icon: const Icon(Icons.close, size: 18),
+                            icon: const Icon(Icons.close, size: AppSpacing.cameraIcon),
                             onPressed: _clearSearch,
                             tooltip: 'Clear',
                           )
@@ -114,8 +113,7 @@ class _UserSearchPageState extends ConsumerState<UserSearchPage> {
                     ref.read(chatSearchProvider.notifier).search(v);
                   },
                 ),
-                const SizedBox(height: FlowSpacing.sm),
-                // ---- Filter chips ----
+                const SizedBox(height: AppSpacing.sm),
                 _FilterChips(
                   selected: state.filter,
                   onChanged: (f) =>
@@ -136,10 +134,6 @@ class _UserSearchPageState extends ConsumerState<UserSearchPage> {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Filter chips row
-// ---------------------------------------------------------------------------
-
 class _FilterChips extends StatelessWidget {
   const _FilterChips({
     required this.selected,
@@ -156,9 +150,9 @@ class _FilterChips extends StatelessWidget {
       child: Row(
         children: [
           _chip(context, SearchFilter.all, 'All'),
-          const SizedBox(width: FlowSpacing.sm),
+          const SizedBox(width: AppSpacing.sm),
           _chip(context, SearchFilter.username, 'Username'),
-          const SizedBox(width: FlowSpacing.sm),
+          const SizedBox(width: AppSpacing.sm),
           _chip(context, SearchFilter.namiId, 'Nami ID'),
         ],
       ),
@@ -174,27 +168,22 @@ class _FilterChips extends StatelessWidget {
       onSelected: (_) => onChanged(filter),
       selectedColor: scheme.primaryContainer,
       checkmarkColor: scheme.onPrimaryContainer,
-      labelStyle: TextStyle(
+      labelStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
         color: isSelected ? scheme.onPrimaryContainer : scheme.onSurfaceVariant,
         fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-        fontSize: 13,
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(FlowSpacing.radiusFull),
+        borderRadius: BorderRadius.circular(AppRadius.full),
         side: BorderSide(
           color: isSelected ? scheme.primary : scheme.outlineVariant,
         ),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: FlowSpacing.sm),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       visualDensity: VisualDensity.compact,
     );
   }
 }
-
-// ---------------------------------------------------------------------------
-// Body — delegates between loading / error / empty / results
-// ---------------------------------------------------------------------------
 
 class _Body extends StatelessWidget {
   const _Body({
@@ -239,11 +228,11 @@ class _Body extends StatelessWidget {
 
     return ListView.separated(
       padding: const EdgeInsets.symmetric(
-        horizontal: FlowSpacing.lg,
-        vertical: FlowSpacing.md,
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
       ),
       itemCount: state.results.length,
-      separatorBuilder: (_, __) => const SizedBox(height: FlowSpacing.sm),
+      separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
       itemBuilder: (context, index) {
         final user = state.results[index];
         return _UserTile(
@@ -255,10 +244,6 @@ class _Body extends StatelessWidget {
     );
   }
 }
-
-// ---------------------------------------------------------------------------
-// Individual user tile
-// ---------------------------------------------------------------------------
 
 class _UserTile extends StatelessWidget {
   const _UserTile({
@@ -279,16 +264,14 @@ class _UserTile extends StatelessWidget {
     return FlowCard(
       onTap: isOpening ? null : onTap,
       padding: const EdgeInsets.symmetric(
-        horizontal: FlowSpacing.lg,
-        vertical: FlowSpacing.md,
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
       ),
       child: Row(
         children: [
-          // ---- Avatar ----
           _UserAvatar(user: user),
-          const SizedBox(width: FlowSpacing.md),
+          const SizedBox(width: AppSpacing.md),
 
-          // ---- Name / username / nami id ----
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -301,11 +284,11 @@ class _UserTile extends StatelessWidget {
                       ?.copyWith(fontWeight: FontWeight.w600),
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: FlowSpacing.xs),
+                const SizedBox(height: AppSpacing.xs),
                 Row(
                   children: [
-                    const Icon(Icons.alternate_email, size: 12),
-                    const SizedBox(width: 3),
+                    const Icon(Icons.alternate_email, size: AppSpacing.xs + 8),
+                    const SizedBox(width: AppSpacing.tinyDot),
                     Flexible(
                       child: Text(
                         user.username,
@@ -316,16 +299,16 @@ class _UserTile extends StatelessWidget {
                       ),
                     ),
                     if (user.namiId != null) ...[
-                      const SizedBox(width: FlowSpacing.sm),
+                      const SizedBox(width: AppSpacing.sm),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
+                          horizontal: AppSpacing.tinyDot,
+                          vertical: AppSpacing.xs,
                         ),
                         decoration: BoxDecoration(
                           color: scheme.secondaryContainer,
                           borderRadius: BorderRadius.circular(
-                            FlowSpacing.radiusFull,
+                            AppRadius.full,
                           ),
                         ),
                         child: Text(
@@ -342,7 +325,7 @@ class _UserTile extends StatelessWidget {
                 ),
                 if (user.bio != null && user.bio!.isNotEmpty)
                   Padding(
-                    padding: const EdgeInsets.only(top: FlowSpacing.xs),
+                    padding: const EdgeInsets.only(top: AppSpacing.xs),
                     child: Text(
                       user.bio!,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -356,16 +339,15 @@ class _UserTile extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(width: FlowSpacing.md),
+          const SizedBox(width: AppSpacing.md),
 
-          // ---- Action button / loader ----
           isOpening
               ? SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
+                  width: AppSpacing.iconSize,
+                  height: AppSpacing.iconSize,
+                  child: const CircularProgressIndicator(
                     strokeWidth: 2,
-                    color: scheme.primary,
+                    color: Colors.white,
                   ),
                 )
               : _ActionBadge(hasChat: hasChat, scheme: scheme),
@@ -386,19 +368,19 @@ class _ActionBadge extends StatelessWidget {
     if (hasChat) {
       return Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: FlowSpacing.sm,
-          vertical: 4,
+          horizontal: AppSpacing.sm,
+          vertical: AppSpacing.xs,
         ),
         decoration: BoxDecoration(
           color: scheme.primaryContainer,
-          borderRadius: BorderRadius.circular(FlowSpacing.radiusFull),
+          borderRadius: BorderRadius.circular(AppRadius.full),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.chat_bubble_outline,
-                size: 13, color: scheme.onPrimaryContainer),
-            const SizedBox(width: 4),
+                size: AppSpacing.xs + 5, color: scheme.onPrimaryContainer),
+            const SizedBox(width: AppSpacing.tinyDot),
             Text(
               'Open',
               style: TextStyle(
@@ -414,18 +396,18 @@ class _ActionBadge extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: FlowSpacing.sm,
-        vertical: 4,
+        horizontal: AppSpacing.sm,
+        vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
         color: scheme.primary,
-        borderRadius: BorderRadius.circular(FlowSpacing.radiusFull),
+        borderRadius: BorderRadius.circular(AppRadius.full),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.add_comment_outlined, size: 13, color: scheme.onPrimary),
-          const SizedBox(width: 4),
+          Icon(Icons.add_comment_outlined, size: AppSpacing.xs + 5, color: scheme.onPrimary),
+          const SizedBox(width: AppSpacing.tinyDot),
           Text(
             'Chat',
             style: TextStyle(
@@ -462,7 +444,6 @@ class _UserAvatar extends StatelessWidget {
       );
     }
 
-    // Derive a stable accent color from the first char of the username.
     final hue = (user.username.codeUnitAt(0) * 137.508) % 360;
     final accent = HSLColor.fromAHSL(1, hue, 0.55, 0.45).toColor();
 
@@ -481,20 +462,16 @@ class _UserAvatar extends StatelessWidget {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Skeleton loader shown while searching
-// ---------------------------------------------------------------------------
-
 class _SearchSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(
-        horizontal: FlowSpacing.lg,
-        vertical: FlowSpacing.md,
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
       ),
       itemCount: 6,
-      separatorBuilder: (_, __) => const SizedBox(height: FlowSpacing.sm),
+      separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
       itemBuilder: (_, __) => const _SkeletonTile(),
     );
   }
@@ -507,29 +484,29 @@ class _SkeletonTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlowCard(
       padding: const EdgeInsets.symmetric(
-        horizontal: FlowSpacing.lg,
-        vertical: FlowSpacing.md,
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
       ),
       child: const Row(
         children: [
           FlowSkeleton(
-            width: 48,
-            height: 48,
-            radius: FlowSpacing.radiusFull,
+            width: AppSpacing.xxxl,
+            height: AppSpacing.xxxl,
+            radius: AppRadius.full,
           ),
-          SizedBox(width: FlowSpacing.md),
+          SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FlowSkeleton(width: 120, height: 14),
-                SizedBox(height: FlowSpacing.xs),
+                SizedBox(height: AppSpacing.xs),
                 FlowSkeleton(width: 80, height: 12),
               ],
             ),
           ),
-          SizedBox(width: FlowSpacing.md),
-          FlowSkeleton(width: 52, height: 26, radius: FlowSpacing.radiusFull),
+          SizedBox(width: AppSpacing.md),
+          FlowSkeleton(width: 52, height: 26, radius: AppRadius.full),
         ],
       ),
     );
