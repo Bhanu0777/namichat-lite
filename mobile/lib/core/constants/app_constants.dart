@@ -16,8 +16,8 @@ class AppConstants {
   static String get wsBaseUrl =>
       Env.baseUrl.replaceFirst(RegExp(r'^http'), 'ws');
 
-  static const Duration connectTimeout = Duration(seconds: 15);
-  static const Duration receiveTimeout = Duration(seconds: 15);
+  static const Duration connectTimeout = Duration(seconds: 60);
+  static const Duration receiveTimeout = Duration(seconds: 60);
 
   static const String hiveBoxName = 'namichat_box';
 
