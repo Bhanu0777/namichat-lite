@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:namichat_lite/app/router/route_paths.dart';
 import 'package:namichat_lite/core/constants/app_constants.dart';
 import 'package:namichat_lite/core/di/injection_container.dart';
-import 'package:namichat_lite/design_system/app_spacing.dart';
-import 'package:namichat_lite/design_system/app_radius.dart';
+import 'package:namichat_lite/core/theme/app_spacing.dart';
+import 'package:namichat_lite/core/theme/app_radius.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/auth/domain/entities/user.dart';
 import 'package:namichat_lite/features/auth/presentation/providers/auth_provider.dart';
@@ -449,8 +449,8 @@ class _SettingsTile extends StatelessWidget {
     final fgColor   = destructive ? scheme.error : scheme.onSurface;
     final iconColor = destructive ? scheme.error : scheme.primary;
     final bgColor   = destructive
-        ? scheme.errorContainer.withOpacity(0.5)
-        : scheme.primaryContainer.withOpacity(0.6);
+        ? scheme.errorContainer.withValues(alpha: 0.5)
+        : scheme.primaryContainer.withValues(alpha: 0.6);
 
     return InkWell(
       onTap: onTap,

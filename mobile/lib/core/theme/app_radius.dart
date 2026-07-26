@@ -11,6 +11,12 @@ abstract final class AppRadius {
   static const double xxl = 28.0;
   static const double full = 999.0;
 
+  static const double radiusSm = sm;
+  static const double radiusMd = md;
+  static const double radiusLg = lg;
+  static const double radiusXl = xxl;
+  static const double radiusFull = full;
+
   static BorderRadius get button => const BorderRadius.all(Radius.circular(md));
   static BorderRadius get card => const BorderRadius.all(Radius.circular(lg));
   static BorderRadius get dialog => const BorderRadius.all(Radius.circular(xl));

@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import 'package:namichat_lite/design_system/app_radius.dart';
-import 'package:namichat_lite/design_system/app_spacing.dart';
+import 'package:namichat_lite/core/theme/app_radius.dart';
+import 'package:namichat_lite/core/theme/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/chat/domain/entities/message.dart';
 import 'package:namichat_lite/features/chat/presentation/providers/chat_provider.dart';

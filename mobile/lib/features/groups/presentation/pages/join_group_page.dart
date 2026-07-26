@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:namichat_lite/app/router/route_paths.dart';
-import 'package:namichat_lite/design_system/app_spacing.dart';
+import 'package:namichat_lite/core/theme/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/groups/presentation/providers/groups_provider.dart';
 

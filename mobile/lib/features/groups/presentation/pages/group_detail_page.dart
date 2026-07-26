@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:namichat_lite/app/router/route_paths.dart';
-import 'package:namichat_lite/design_system/app_colors.dart';
-import 'package:namichat_lite/design_system/app_spacing.dart';
-import 'package:namichat_lite/design_system/app_radius.dart';
+import 'package:namichat_lite/core/theme/app_colors.dart';
+import 'package:namichat_lite/core/theme/app_spacing.dart';
+import 'package:namichat_lite/core/theme/app_radius.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/features/auth/presentation/providers/auth_provider.dart';
 import 'package:namichat_lite/features/groups/domain/entities/group.dart';

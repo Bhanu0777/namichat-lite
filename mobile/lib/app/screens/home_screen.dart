@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import 'package:namichat_lite/core/di/injection_container.dart';
-import 'package:namichat_lite/design_system/app_colors.dart';
-import 'package:namichat_lite/design_system/app_spacing.dart';
+import 'package:namichat_lite/core/theme/app_colors.dart';
+import 'package:namichat_lite/core/theme/app_spacing.dart';
 import 'package:namichat_lite/design_system/flow.dart';
 import 'package:namichat_lite/app/router/route_paths.dart';
 
