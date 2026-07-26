@@ -1,0 +1,91 @@
+Resolving dependencies...
+Downloading packages...
+  _fe_analyzer_shared 67.0.0 (105.0.0 available)
+  analyzer 6.4.1 (14.1.0 available)
+  analyzer_plugin 0.11.3 (0.14.14 available)
+  build 2.4.1 (4.0.8 available)
+  build_config 1.1.2 (1.3.1 available)
+  build_resolvers 2.4.2 (3.0.4 available)
+  build_runner 2.4.13 (2.15.2 available)
+  build_runner_core 7.3.2 (9.3.2 available)
+  connectivity_plus 6.1.5 (7.3.1 available)
+  custom_lint_core 0.6.3 (0.8.2 available)
+  dart_style 2.3.6 (3.1.12 available)
+  dbus 0.7.13 (0.7.14 available)
+  dio 5.10.0 (5.11.0 available)
+  flutter_lints 4.0.0 (6.0.0 available)
+  flutter_riverpod 2.6.1 (3.3.2 available)
+  flutter_secure_storage 9.2.4 (10.3.1 available)
+  flutter_secure_storage_linux 1.2.3 (3.0.1 available)
+  flutter_secure_storage_macos 3.1.3 (4.0.0 available)
+  flutter_secure_storage_platform_interface 1.1.2 (2.0.2 available)
+  flutter_secure_storage_web 1.2.1 (2.1.1 available)
+  flutter_secure_storage_windows 3.1.2 (4.2.2 available)
+  freezed 2.5.2 (3.2.5 available)
+  freezed_annotation 2.4.4 (3.1.0 available)
+  go_router 14.8.1 (17.3.0 available)
+  hooks 2.0.2 (2.1.0 available)
+  internet_connection_checker_plus 2.7.2 (3.1.1 available)
+  intl 0.20.2 (0.20.3 available)
+  js 0.6.7 (0.7.2 available)
+  json_annotation 4.9.0 (4.12.0 available)
+  json_serializable 6.8.0 (6.14.0 available)
+  lints 4.0.0 (6.1.0 available)
+  matcher 0.12.19 (0.12.20 available)
+  meta 1.18.0 (1.19.0 available)
+  mockito 5.4.4 (5.7.0 available)
+  package_config 2.2.0 (3.0.0 available)
+  record_use 0.6.0 (1.0.0 available)
+  riverpod 2.6.1 (3.3.2 available)
+  riverpod_analyzer_utils 0.5.1 (0.5.10 available)
+  riverpod_annotation 2.6.1 (4.0.3 available)
+  riverpod_generator 2.4.0 (4.0.4 available)
+  shelf_web_socket 2.0.1 (3.0.0 available)
+  source_gen 1.5.0 (4.2.4 available)
+  source_helper 1.3.5 (1.3.12 available)
+  test_api 0.7.11 (0.7.13 available)
+  vector_math 2.2.0 (2.4.1 available)
+  web_socket_channel 2.4.0 (3.0.3 available)
+  win32 5.15.0 (6.3.0 available)
+Got dependencies!
+47 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Analyzing mobile...                                             
+
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - lib\app\router\splash_page.dart:208:22 - prefer_const_constructors
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - lib\core\network\socket_service.dart:96:44 - curly_braces_in_flow_control_structures
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - lib\core\theme\app_colors.dart:38:12 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - lib\core\theme\app_colors.dart:62:12 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - lib\features\chat\presentation\pages\user_search_page.dart:387:17 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - lib\features\chat\presentation\pages\user_search_page.dart:527:12 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - lib\features\groups\domain\usecases\group_usecases.dart:57:27 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - lib\features\groups\domain\usecases\group_usecases.dart:57:32 - prefer_const_constructors
+   info - Missing an 'await' for the 'Future' computed by this expression. Try adding an 'await' or wrapping the expression with 'unawaited' - lib\features\groups\presentation\pages\group_detail_page.dart:393:47 - unawaited_futures
+   info - Missing an 'await' for the 'Future' computed by this expression. Try adding an 'await' or wrapping the expression with 'unawaited' - lib\features\groups\presentation\pages\group_detail_page.dart:442:47 - unawaited_futures
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - lib\features\groups\presentation\pages\join_group_page.dart:108:27 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - lib\features\profile\presentation\pages\profile_page.dart:132:36 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - lib\features\settings\presentation\pages\settings_page.dart:169:19 - prefer_const_constructors
+   info - Dependencies not sorted alphabetically. Try sorting the dependencies alphabetically (A to Z) - pubspec.yaml:17:3 - sort_pub_dependencies
+   info - Dependencies not sorted alphabetically. Try sorting the dependencies alphabetically (A to Z) - pubspec.yaml:60:3 - sort_pub_dependencies
+  error - Target of URI doesn't exist: 'package:namichat_lite/features/chat/presentation/pages/chats_page.dart'. Try creating the file referenced by the URI, or try using a URI for a file that does exist - test\app_flow_test.dart:11:8 - uri_does_not_exist
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\app_flow_test.dart:47:12 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\app_flow_test.dart:47:17 - prefer_const_constructors
+  error - Undefined name 'homeChatsProvider'. Try correcting the name to one that is defined, or defining the name - test\app_flow_test.dart:71:11 - undefined_identifier
+  error - The name 'HomeChatPreview' isn't a class. Try correcting the name to match an existing class - test\app_flow_test.dart:72:23 - creation_with_non_type
+warning - The declaration 'setLoginError' isn't referenced. Try removing the declaration of 'setLoginError' - test\unit\features\auth\auth_notifier_test.dart:158:8 - unused_element
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\unit\features\chat\chat_state_test.dart:31:14 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\unit\features\chat\chat_state_test.dart:32:14 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\unit\features\chat\chat_state_test.dart:33:14 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\unit\features\chat\chat_state_test.dart:34:14 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\unit\features\chat\chat_state_test.dart:38:14 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\unit\features\chat\chat_state_test.dart:39:14 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\unit\features\chat\chat_state_test.dart:43:21 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\unit\features\chat\chat_state_test.dart:49:21 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\unit\features\chat\chat_state_test.dart:55:14 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\unit\features\chat\chat_state_test.dart:56:14 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\widget\features\chat\chat_page_test.dart:97:19 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\widget\features\chat\chat_page_test.dart:113:19 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\widget\features\chat\chat_page_test.dart:129:19 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation - test\widget\features\chat\chat_page_test.dart:145:19 - prefer_const_constructors
+
+35 issues found. (ran in 9.1s)
