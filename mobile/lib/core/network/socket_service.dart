@@ -174,16 +174,17 @@ class SocketService {
   void _onError(Object error) {
     if (_disposed) return;
 
-    // If we can detect app-level close semantics from the error, reflect
-    // them in state and avoid retry loops.
-    _maybeSetCloseCodeStatus(error);
-
-    _stopHeartbeat();
-
-    // Only schedule retry when we didn't map to auth/forbidden.
-    if (_status == SocketStatus.authError || _status == SocketStatus.forbidden) {
+    final closeCode = _maybeExtractCloseCode(error);
+    if (closeCode == 4001) {
+      _setStatus(SocketStatus.authError);
       return;
     }
+    if (closeCode == 4003) {
+      _setStatus(SocketStatus.forbidden);
+      return;
+    }
+
+    _stopHeartbeat();
 
     _setStatus(SocketStatus.disconnected);
     _scheduleRetry();
@@ -194,15 +195,14 @@ class SocketService {
     if (_disposed) return;
     _stopHeartbeat();
 
-    // Detect app-level close codes (4001 / 4003).
     final closeCode = _transport.isConnected ? null : _readCloseCode();
     if (closeCode == 4001) {
       _setStatus(SocketStatus.authError);
-      return; // No retry — token problem requires user action / refresh.
+      return;
     }
     if (closeCode == 4003) {
       _setStatus(SocketStatus.forbidden);
-      return; // No retry — not a member.
+      return;
     }
 
     _setStatus(SocketStatus.disconnected);
@@ -212,33 +212,26 @@ class SocketService {
   // Try to detect app-level close codes (4001 / 4003).
   // `web_socket_channel` may expose close details depending on the underlying
   // implementation; we keep this best-effort and fall back to `null`.
+  //
+  // NOTE: The `web_socket_channel` package does not expose close codes
+  // consistently across platforms. If reliable close-code detection is
+  // required, consider switching to a lower-level WebSocket client or
+  // wrapping the channel to capture close events.
   int? _readCloseCode() {
-    // WebSocketChannel/underlying implementations don't provide a stable API
-    // for close codes across all platforms/packages.
-    //
-    // If the transport ever exposes a close code in the future, handle it
-    // here. For now, return null so status mapping still works via error/handshake.
     return null;
   }
 
-  /// Optional: call this from [_onError] when the underlying transport provides
-  /// close code info via the error object.
-  void _maybeSetCloseCodeStatus(Object error) {
-    // Best-effort extraction.
-    // If the error is a WebSocketException with a close code, map it.
-    final code = switch (error) {
-      // ignore: unreachable_switch_case
-      // ignore: deprecated_member_use
-      final e when e.toString().contains('4001') => 4001,
-      final e when e.toString().contains('4003') => 4003,
-      _ => null,
-    };
-
-    if (code == 4001) {
-      _setStatus(SocketStatus.authError);
-    } else if (code == 4003) {
-      _setStatus(SocketStatus.forbidden);
-    }
+  /// Try to detect app-level close codes from error messages.
+  ///
+  /// This is a best-effort heuristic: some WebSocket implementations embed
+  /// the close code in the error message, while others do not expose it at
+  /// all. Returns `4001` for auth failures, `4003` for membership
+  /// violations, or `null` when the code cannot be determined.
+  int? _maybeExtractCloseCode(Object error) {
+    final text = error.toString();
+    if (text.contains('4001')) return 4001;
+    if (text.contains('4003')) return 4003;
+    return null;
   }
 
 

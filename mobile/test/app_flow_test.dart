@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:namichat_lite/app/app.dart';
+import 'package:namichat_lite/app/screens/home_screen.dart';
 import 'package:namichat_lite/core/di/injection_container.dart';
 import 'package:namichat_lite/core/errors/failures.dart';
 import 'package:namichat_lite/core/utils/either.dart';
 import 'package:namichat_lite/features/auth/domain/entities/user.dart';
 import 'package:namichat_lite/features/auth/domain/repositories/auth_repository.dart';
-import 'package:namichat_lite/features/chat/presentation/pages/chats_page.dart';
 import 'helpers/fake_box.dart';
 
 // Fake User
@@ -44,7 +44,7 @@ class _FakeAuthRepo implements AuthRepository {
   @override
   Future<Either<Failure, User>> getCurrentUser() async {
     if (_loggedIn) return Right(_fakeUser);
-    return Left(ServerFailure('No user'));
+    return const Left(ServerFailure('No user'));
   }
 
   @override
@@ -125,4 +125,3 @@ void main() {
     expect(find.text('Sign in to continue to NamiChat Lite'), findsOneWidget);
   });
 }
-

@@ -166,7 +166,7 @@ class SettingsPage extends ConsumerWidget {
               padding: EdgeInsets.zero,
               child: Column(
                 children: [
-                  _InfoTile(
+                  const _InfoTile(
                     icon: Icons.waves_outlined,
                     label: 'App name',
                     value: AppConstants.appName,

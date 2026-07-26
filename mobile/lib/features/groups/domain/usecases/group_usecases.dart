@@ -54,7 +54,7 @@ class JoinGroupByCodeUseCase {
   Future<Either<Failure, Group>> call(String inviteCode) {
     final trimmed = inviteCode.trim().toUpperCase();
     if (trimmed.isEmpty) {
-      return Future.value(Left(ValidationFailure('Invite code cannot be empty')));
+      return Future.value(const Left(ValidationFailure('Invite code cannot be empty')));
     }
     return _repo.joinByCode(trimmed);
   }

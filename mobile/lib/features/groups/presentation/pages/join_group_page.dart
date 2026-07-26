@@ -105,7 +105,7 @@ class _JoinGroupPageState extends ConsumerState<JoinGroupPage> {
                   hint: 'e.g. A3KP9XZW',
                   prefixIcon: const Icon(Icons.key_outlined),
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.content_paste_outlined, size: AppSpacing.iconSize),
+                    icon: const Icon(Icons.content_paste_outlined, size: AppSpacing.iconSize),
                     onPressed: _pasteFromClipboard,
                     tooltip: 'Paste',
                   ),

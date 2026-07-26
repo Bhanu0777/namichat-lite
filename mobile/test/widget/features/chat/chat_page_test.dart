@@ -94,7 +94,7 @@ void main() {
             chatNotifierProvider.overrideWith((ref, chatId) => _FakeChatNotifier()),
           ],
           child: MaterialApp(
-            home: ChatPage(chatId: 'chat-1'),
+            home: const ChatPage(chatId: 'chat-1'),
             theme: ThemeData(useMaterial3: true),
           ),
         ),
@@ -110,7 +110,7 @@ void main() {
             chatNotifierProvider.overrideWith((ref, chatId) => _FakeChatNotifier()),
           ],
           child: MaterialApp(
-            home: ChatPage(chatId: 'chat-1'),
+            home: const ChatPage(chatId: 'chat-1'),
             theme: ThemeData(useMaterial3: true),
           ),
         ),
@@ -126,7 +126,7 @@ void main() {
             chatNotifierProvider.overrideWith((ref, chatId) => _FakeChatNotifier()),
           ],
           child: MaterialApp(
-            home: ChatPage(chatId: 'chat-1'),
+            home: const ChatPage(chatId: 'chat-1'),
             theme: ThemeData(useMaterial3: true),
           ),
         ),
@@ -142,7 +142,7 @@ void main() {
             chatNotifierProvider.overrideWith((ref, chatId) => _FakeChatNotifier()),
           ],
           child: MaterialApp(
-            home: ChatPage(chatId: 'chat-1'),
+            home: const ChatPage(chatId: 'chat-1'),
             theme: ThemeData(useMaterial3: true),
           ),
         ),

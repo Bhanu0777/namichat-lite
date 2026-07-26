@@ -11,7 +11,9 @@ class AuthValidators {
   static String? email(String? value) {
     final message = required(value, label: 'Email');
     if (message != null) return message;
-    if (!value!.trim().contains('@')) {
+    final trimmed = value!.trim();
+    final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+    if (!emailRegex.hasMatch(trimmed)) {
       return 'Enter a valid email address';
     }
     return null;

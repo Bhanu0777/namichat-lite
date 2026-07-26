@@ -28,15 +28,15 @@ void main() {
     });
 
     test('isConnected is true only when socketStatus is connected', () {
-      expect(ChatState(socketStatus: SocketStatus.connected).isConnected, isTrue);
-      expect(ChatState(socketStatus: SocketStatus.idle).isConnected, isFalse);
-      expect(ChatState(socketStatus: SocketStatus.reconnecting).isConnected, isFalse);
-      expect(ChatState(socketStatus: SocketStatus.disconnected).isConnected, isFalse);
+      expect(const ChatState(socketStatus: SocketStatus.connected).isConnected, isTrue);
+      expect(const ChatState(socketStatus: SocketStatus.idle).isConnected, isFalse);
+      expect(const ChatState(socketStatus: SocketStatus.reconnecting).isConnected, isFalse);
+      expect(const ChatState(socketStatus: SocketStatus.disconnected).isConnected, isFalse);
     });
 
     test('isPeerOnline is true when onlineUserIds is not empty', () {
-      expect(ChatState(onlineUserIds: {'u2'}).isPeerOnline, isTrue);
-      expect(ChatState(onlineUserIds: <String>{}).isPeerOnline, isFalse);
+      expect(const ChatState(onlineUserIds: {'u2'}).isPeerOnline, isTrue);
+      expect(const ChatState(onlineUserIds: <String>{}).isPeerOnline, isFalse);
     });
 
     test('clearHistoryError removes historyError', () {

@@ -384,10 +384,10 @@ class _UserTile extends StatelessWidget {
           const SizedBox(width: AppSpacing.md),
 
           isOpening
-              ? SizedBox(
+              ? const SizedBox(
                   width: AppSpacing.iconSize,
                   height: AppSpacing.iconSize,
-                  child: const CircularProgressIndicator(
+                  child: CircularProgressIndicator(
                     strokeWidth: 2,
                     color: Colors.white,
                   ),
@@ -524,12 +524,12 @@ class _SkeletonTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlowCard(
-      padding: const EdgeInsets.symmetric(
+    return const FlowCard(
+      padding: EdgeInsets.symmetric(
         horizontal: AppSpacing.lg,
         vertical: AppSpacing.md,
       ),
-      child: const Row(
+      child: Row(
         children: [
           FlowSkeleton(
             width: AppSpacing.xxxl,

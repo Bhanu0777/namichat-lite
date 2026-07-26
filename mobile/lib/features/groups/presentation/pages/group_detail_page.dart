@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -389,8 +391,7 @@ class _GroupDetailScaffold extends ConsumerWidget {
           .deleteGroup();
       if (ok && context.mounted) {
         ref.invalidate(groupDetailProvider(groupId));
-        // Sync the list so the deleted group disappears immediately.
-        ref.read(groupsListProvider.notifier).deleteGroup(groupId);
+        unawaited(ref.read(groupsListProvider.notifier).deleteGroup(groupId));
         context.go(RoutePaths.home);
       }
     }
@@ -438,8 +439,7 @@ class _GroupDetailScaffold extends ConsumerWidget {
           .read(groupDetailProvider(groupId).notifier)
           .removeMember(member.userId);
       if (ok && isSelf && context.mounted) {
-        // Remove from list so it disappears immediately.
-        ref.read(groupsListProvider.notifier).deleteGroup(groupId);
+        unawaited(ref.read(groupsListProvider.notifier).deleteGroup(groupId));
         context.go(RoutePaths.home);
       }
     }

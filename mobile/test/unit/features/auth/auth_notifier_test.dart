@@ -153,7 +153,3 @@ void main() {
     });
   });
 }
-
-extension on _FakeAuthRepository {
-  void setLoginError(String? msg) => _loginError = msg;
-}

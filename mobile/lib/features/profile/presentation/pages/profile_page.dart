@@ -129,7 +129,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           child: CircleAvatar(
                             radius: 42,
                             backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                            child: Icon(Icons.person_outline, size: AppSpacing.tileIcon),
+                            child: const Icon(Icons.person_outline, size: AppSpacing.tileIcon),
                           ),
                         ),
                         const SizedBox(height: AppSpacing.lg),
