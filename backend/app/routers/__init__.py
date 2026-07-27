@@ -16,7 +16,7 @@ from app.websockets.chat_ws import router as chat_ws_router
 
 
 def register_routers(app: FastAPI) -> None:
-    app.include_router(health_router)
+    app.include_router(health_router, prefix=settings.API_V1_PREFIX)
     app.include_router(auth_router,   prefix=settings.API_V1_PREFIX)
     app.include_router(users_router,  prefix=settings.API_V1_PREFIX)
     app.include_router(chats_router,  prefix=settings.API_V1_PREFIX)
